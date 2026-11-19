@@ -32,17 +32,17 @@ const goToAdmin = () => {
       <div class="hero-banner">
         <!-- 左侧文本与操作 -->
         <div class="hero-content">
-          <div class="hero-tag label-medium">
+          <div class="hero-tag type-meta">
             <Sparkles :size="15" />
             <span>Google Material 3 Expressive 体系</span>
           </div>
 
-          <h1 class="hero-heading">
+          <h1 class="hero-heading type-display">
             Design for emotion.<br />
             Built for scale.
           </h1>
 
-          <p class="hero-desc body-large">
+          <p class="hero-desc">
             面向未来的通用前端脚手架。一套语义化 Design Tokens，完美兼顾<b>“数据密集型后台工作台”</b>与<b>“高视觉张力产品官网”</b>的双轨架构。
           </p>
 
@@ -61,15 +61,15 @@ const goToAdmin = () => {
 
           <!-- 底部特性点缀 -->
           <div class="hero-features-list">
-            <div class="feat-item body-small">
+            <div class="feat-item type-meta">
               <CheckCircle2 :size="16" class="text-tertiary" />
               <span>零硬编码颜色</span>
             </div>
-            <div class="feat-item body-small">
+            <div class="feat-item type-meta">
               <CheckCircle2 :size="16" class="text-tertiary" />
               <span>双端自适应断点</span>
             </div>
-            <div class="feat-item body-small">
+            <div class="feat-item type-meta">
               <CheckCircle2 :size="16" class="text-tertiary" />
               <span>Plus Jakarta Sans 排版</span>
             </div>
@@ -186,7 +186,7 @@ const goToAdmin = () => {
                 y="354"
                 fill="var(--md-sys-color-on-surface-variant)"
                 font-family="Plus Jakarta Sans, sans-serif"
-                font-size="11"
+                font-size="12"
               >
                 Admin + Portal
               </text>
@@ -201,14 +201,14 @@ const goToAdmin = () => {
          ==================================================================== -->
     <section id="bento" class="bento-container">
       <div class="section-title-wrap">
-        <div class="section-tag label-medium">
+        <div class="section-tag type-meta">
           <Layers :size="15" />
           <span>非对称网格系统 (Asymmetric Bento Grid)</span>
         </div>
-        <h2 class="display-small section-heading">
+        <h2 class="section-heading type-title-lg">
           打破呆板平铺，重塑视觉节奏
         </h2>
-        <p class="body-large text-secondary section-sub">
+        <p class="section-sub type-body text-secondary">
           借由错落的大色块、大圆角与空间留白，呈现如 Google 官网般呼吸感强烈的界面韵律。
         </p>
       </div>
@@ -230,9 +230,9 @@ const goToAdmin = () => {
             </svg>
           </div>
           <div class="bento-inner-content">
-            <span class="label-large text-uppercase">Dynamic Color Architecture</span>
-            <h3 class="headline-medium">Material You 动态调色算法</h3>
-            <p class="body-medium">
+            <span class="type-meta text-uppercase">Dynamic Color Architecture</span>
+            <h3 class="type-title-md">Material You 动态调色算法</h3>
+            <p class="type-body">
               基于色调调色板算法推演，全局严禁硬编码颜色。自动建立 5 级 Surface 容器、主色/辅助色对比序列，无论是明艳高对比或是温润柔光，皆由 CSS Token 纯粹驱动。
             </p>
           </div>
@@ -247,8 +247,8 @@ const goToAdmin = () => {
             <Zap :size="26" />
           </div>
           <div class="bento-inner-content">
-            <h3 class="headline-small">24px - 36px 柔润圆角</h3>
-            <p class="body-medium">
+            <h3 class="type-title-md">24px - 36px 柔润圆角</h3>
+            <p class="type-body">
               弱化生硬锐利的像素细线，全量启用 M3 规范的大曲率几何外壳，带来极致温润的现代触觉。
             </p>
           </div>
@@ -260,8 +260,8 @@ const goToAdmin = () => {
             <Palette :size="26" />
           </div>
           <div class="bento-inner-content">
-            <h3 class="headline-small">100% Token 昼夜双模</h3>
-            <p class="body-medium text-secondary">
+            <h3 class="type-title-md">100% Token 昼夜双模</h3>
+            <p class="type-body text-secondary">
               集成首屏防闪白内联探针与 LocalStorage 记忆。平滑渐变色彩过渡，夜间模式舒适不刺眼。
             </p>
           </div>
@@ -274,9 +274,9 @@ const goToAdmin = () => {
               <LayoutDashboard :size="26" />
             </div>
             <div class="bento-inner-content">
-              <span class="label-large text-primary">Dual-Track Architecture</span>
-              <h3 class="headline-small">双轨共存架构：后台管理 + 官网展示</h3>
-              <p class="body-medium text-secondary">
+              <span class="type-meta text-primary font-bold">Dual-Track Architecture</span>
+              <h3 class="type-title-md">双轨共存架构：后台管理 + 官网展示</h3>
+              <p class="type-body text-secondary">
                 无需在管理系统与展示官网之间建立两套项目脚手架。一套工程代码即可二选一或同时使用 <code>AdaptiveShell</code> 与 <code>PortalShell</code>。
               </p>
             </div>
@@ -292,12 +292,12 @@ const goToAdmin = () => {
       <MdCard variant="outlined" class="preview-hero-card">
         <div class="preview-card-inner">
           <div class="preview-text">
-            <div class="section-tag label-medium">
+            <div class="section-tag type-meta">
               <Sliders :size="15" />
               <span>开箱即用的原子组件库</span>
             </div>
-            <h2 class="headline-medium">响应式原子组件随时调用</h2>
-            <p class="body-large text-secondary">
+            <h2 class="type-title-lg">响应式原子组件随时调用</h2>
+            <p class="type-body text-secondary">
               <code>MdButton</code>、<code>MdCard</code>、<code>AdaptiveModal</code>，全量采用 Composition API 与 TypeScript 类型声明。
             </p>
             <div class="preview-actions">
@@ -312,7 +312,7 @@ const goToAdmin = () => {
           <!-- 2x2 网格排布，完美消除单按钮单独掉到第二行 -->
           <div class="preview-demo-interactive">
             <div class="interactive-sample-box">
-              <div class="sample-title label-medium">按钮四态微交互预览</div>
+              <div class="sample-title type-meta font-medium">按钮四态微交互预览</div>
               <div class="sample-buttons-grid">
                 <MdButton variant="filled" class="preview-btn">Filled 按钮</MdButton>
                 <MdButton variant="tonal" class="preview-btn">Tonal 按钮</MdButton>
@@ -387,17 +387,14 @@ const goToAdmin = () => {
 }
 
 .hero-heading {
-  font-size: 3.25rem;
-  line-height: 1.12;
-  font-weight: 800;
-  letter-spacing: -0.03em;
   color: var(--md-sys-color-on-surface);
 }
 
 .hero-desc {
+  font-size: 16px;
+  line-height: 1.6;
   color: var(--md-sys-color-on-surface-variant);
   max-width: 520px;
-  line-height: 1.6;
 }
 
 .hero-actions {
@@ -661,9 +658,6 @@ const goToAdmin = () => {
     flex-direction: column;
     padding: 36px 28px;
   }
-  .hero-heading {
-    font-size: 2.5rem;
-  }
   .bento-grid {
     grid-template-columns: 1fr;
   }
@@ -680,9 +674,6 @@ const goToAdmin = () => {
   .hero-banner {
     border-radius: 28px;
     padding: 28px 20px;
-  }
-  .hero-heading {
-    font-size: 2rem;
   }
   .bento-card {
     padding: 24px;

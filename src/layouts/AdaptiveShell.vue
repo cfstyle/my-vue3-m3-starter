@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, type Component } from 'vue'
+import { computed, ref, onMounted, onUnmounted, type Component } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   LayoutDashboard,
@@ -16,10 +16,11 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   AlignJustify,
-  Rows3
+  Rows3,
+  Menu
 } from 'lucide-vue-next'
 import { useThemeStore } from '@/stores/theme'
-import { MdSwitch } from '@/components/m3'
+import { MdSwitch, MdDrawer } from '@/components/m3'
 
 interface NavItem {
   name: string
@@ -42,7 +43,9 @@ const router = useRouter()
 const themeStore = useThemeStore()
 
 const searchQuery = ref('')
+const searchInputRef = ref<HTMLInputElement | null>(null)
 const isRailCollapsed = ref(false)
+const isMobileDrawerOpen = ref(false)
 
 const toggleCollapse = () => {
   isRailCollapsed.value = !isRailCollapsed.value
@@ -59,13 +62,31 @@ const navigateTo = (path: string) => {
   }
 }
 
+const navigateAndCloseMobileDrawer = (path: string) => {
+  isMobileDrawerOpen.value = false
+  navigateTo(path)
+}
+
 const isActive = (path: string) => {
   if (path === '/') return route.path === '/'
   return route.path === path || route.path.startsWith(path + '/')
 }
 
+const handleGlobalKeydown = (e: KeyboardEvent) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault()
+    searchInputRef.value?.focus()
+    searchInputRef.value?.select()
+  }
+}
+
 onMounted(() => {
   themeStore.setLayoutContext('admin')
+  window.addEventListener('keydown', handleGlobalKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleGlobalKeydown)
 })
 </script>
 
@@ -76,6 +97,15 @@ onMounted(() => {
          ==================================================================== -->
     <header class="m3-mobile-top-bar">
       <div class="m3-mobile-top-bar__start">
+        <button
+          type="button"
+          class="m3-icon-button md-state-layer m3-mobile-menu-btn"
+          title="打开侧边导航抽屉"
+          aria-label="打开侧边导航抽屉"
+          @click="isMobileDrawerOpen = true"
+        >
+          <Menu :size="22" />
+        </button>
         <div class="m3-brand-badge">
           <Sparkles :size="20" />
         </div>
@@ -289,9 +319,10 @@ onMounted(() => {
         <div class="m3-search-bar">
           <Search :size="18" class="m3-search-bar__icon" />
           <input
+            ref="searchInputRef"
             v-model="searchQuery"
             type="text"
-            placeholder="搜索功能、数据或设置..."
+            placeholder="搜索功能、数据或设置... (Ctrl+K)"
             class="m3-search-bar__input body-medium"
           />
           <div class="m3-search-bar__shortcut label-small">
@@ -375,6 +406,78 @@ onMounted(() => {
         <span class="m3-nav-bar-item__label label-medium">{{ item.label }}</span>
       </button>
     </nav>
+
+    <!-- ====================================================================
+         6. 移动端侧边导航抽屉 (由顶部汉堡菜单唤起)
+         ==================================================================== -->
+    <MdDrawer
+      v-model="isMobileDrawerOpen"
+      title="导航菜单"
+      width="300px"
+    >
+      <div class="m3-mobile-drawer-body">
+        <div class="m3-mobile-drawer-brand" @click="navigateAndCloseMobileDrawer('/')">
+          <div class="m3-brand-badge">
+            <Sparkles :size="20" />
+          </div>
+          <div class="m3-brand-text">
+            <span class="title-medium">Material 3</span>
+            <span class="body-small text-secondary">Vue3 Adaptive</span>
+          </div>
+        </div>
+
+        <nav class="m3-mobile-drawer-nav">
+          <button
+            v-for="item in navItems"
+            :key="item.path"
+            type="button"
+            :class="['m3-drawer-item', 'md-state-layer', { 'is-active': isActive(item.path) }]"
+            @click="navigateAndCloseMobileDrawer(item.path)"
+          >
+            <span class="m3-drawer-item__icon">
+              <component :is="item.icon" :size="22" />
+            </span>
+            <span class="m3-drawer-item__label label-large">{{ item.label }}</span>
+            <span v-if="item.badge" class="m3-badge drawer-badge">{{ item.badge }}</span>
+          </button>
+        </nav>
+
+        <div class="m3-mobile-drawer-footer">
+          <button
+            type="button"
+            class="m3-portal-switch-card md-state-layer"
+            @click="navigateAndCloseMobileDrawer('/portal')"
+          >
+            <div class="m3-portal-switch-icon">
+              <Globe :size="18" />
+            </div>
+            <div class="m3-portal-switch-text">
+              <span class="label-large">官网展示模式</span>
+              <span class="body-small text-secondary">切换至 C 端展示页</span>
+            </div>
+            <ArrowUpRight :size="16" class="m3-portal-switch-arrow" />
+          </button>
+
+          <div
+            class="m3-drawer__theme-switch"
+            @click="themeStore.toggleTheme"
+          >
+            <div class="m3-drawer__theme-info">
+              <component :is="themeStore.isDark ? Moon : Sun" :size="20" />
+              <span class="label-large">{{ themeStore.isDark ? '深色模式' : '浅色模式' }}</span>
+            </div>
+            <MdSwitch
+              :model-value="themeStore.isDark"
+              @click.stop
+              @update:model-value="themeStore.toggleTheme"
+            >
+              <template #checkedIcon><Moon :size="12" /></template>
+              <template #uncheckedIcon><Sun :size="12" /></template>
+            </MdSwitch>
+          </div>
+        </div>
+      </div>
+    </MdDrawer>
   </div>
 </template>
 
@@ -437,14 +540,14 @@ onMounted(() => {
   right: 14px;
   min-width: 18px;
   height: 18px;
-  font-size: 11px;
+  font-size: var(--md-type-meta-size, 12px);
 }
 
 .drawer-badge {
   position: static;
   min-width: 18px;
   height: 18px;
-  font-size: 11px;
+  font-size: var(--md-type-meta-size, 12px);
   line-height: 18px;
   margin-left: auto;
 }
@@ -455,7 +558,7 @@ onMounted(() => {
   right: 10px;
   min-width: 16px;
   height: 16px;
-  font-size: 10px;
+  font-size: var(--md-type-meta-size, 12px);
   line-height: 16px;
 }
 
@@ -470,7 +573,7 @@ onMounted(() => {
   background-color: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface);
   padding: 0 16px;
-  z-index: 50;
+  z-index: var(--z-header, 30);
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--md-sys-color-surface-container-high);
@@ -480,6 +583,11 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.m3-mobile-menu-btn {
+  display: inline-flex;
+  margin-right: -4px;
 }
 
 /* ================= 2. 平板端常驻导航轨 (Navigation Rail) ================= */
@@ -496,7 +604,7 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   padding: 20px 0;
-  z-index: 60;
+  z-index: var(--z-header, 30);
 }
 
 .m3-nav-rail__header {
@@ -530,7 +638,7 @@ onMounted(() => {
   border-right: 1px solid var(--md-sys-color-outline-variant);
   flex-direction: column;
   padding: 20px 16px;
-  z-index: 60;
+  z-index: var(--z-header, 30);
   overflow-y: auto;
   overflow-x: hidden;
   transition: width 0.25s var(--md-easing-emphasized),
@@ -821,7 +929,7 @@ onMounted(() => {
   background-color: var(--md-sys-color-surface);
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: var(--z-header, 30);
   border-bottom: 1px solid var(--md-sys-color-surface-container-high);
 }
 
@@ -961,9 +1069,42 @@ onMounted(() => {
   background-color: var(--md-sys-color-surface-container);
   border-top: 1px solid var(--md-sys-color-outline-variant);
   padding-bottom: env(safe-area-inset-bottom, 0);
-  z-index: 50;
+  z-index: var(--z-header, 30);
   align-items: center;
   justify-content: space-around;
+}
+
+/* ================= 6. 移动端侧边抽屉内部结构 ================= */
+.m3-mobile-drawer-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+.m3-mobile-drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  cursor: pointer;
+}
+
+.m3-mobile-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.m3-mobile-drawer-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  margin-top: auto;
 }
 
 .m3-nav-bar-item {
@@ -1063,6 +1204,52 @@ onMounted(() => {
   }
   .m3-desktop-top-bar {
     display: flex;
+  }
+}
+
+/* 顶部操作区窄屏自适应 (< 1024px & < 768px 防溢出防重叠) */
+@media (max-width: 1023.98px) {
+  .m3-desktop-top-bar {
+    padding: 0 16px;
+    gap: 12px;
+  }
+  .m3-search-bar {
+    max-width: 260px;
+    min-width: 140px;
+    padding: 0 12px;
+  }
+  .m3-search-bar__shortcut {
+    display: none;
+  }
+  .m3-seed-picker {
+    gap: 4px;
+    padding: 3px 5px;
+  }
+  .m3-seed-dot {
+    width: 16px;
+    height: 16px;
+  }
+  .m3-topbar-divider {
+    margin: 0 2px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .m3-desktop-top-bar {
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .m3-search-bar {
+    max-width: 180px;
+    min-width: 120px;
+  }
+  .m3-seed-picker {
+    gap: 3px;
+    padding: 2px 4px;
+  }
+  .m3-seed-dot {
+    width: 14px;
+    height: 14px;
   }
 }
 </style>

@@ -119,6 +119,49 @@
   --md-card-padding: 20px;
   --md-grid-gap: 20px;
   --md-space-section: 36px;
+
+  /* ==========================================================================
+     M3 Global Z-Index Scale (统一全站弹层层级阶梯)
+     ========================================================================== */
+  --z-header: 30;
+  --z-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-toast: 70;
+
+  /* ==========================================================================
+     5 级双端语义模数音阶 (Modular Type Scale Tokens)
+     基准回退 (Baseline fallback: Default to Admin Context)
+     ========================================================================== */
+  /* Tier 1: 视觉焦点 (Display) - Admin: 26px / Portal: 42px */
+  --md-type-display-size: 26px;
+  --md-type-display-lh: 32px;
+  --md-type-display-weight: 700;
+  --md-type-display-tracking: -0.02em;
+
+  /* Tier 2: 页面/区块标题 (Title Large) - Admin: 20px / Portal: 28px */
+  --md-type-title-lg-size: 20px;
+  --md-type-title-lg-lh: 28px;
+  --md-type-title-lg-weight: 700;
+  --md-type-title-lg-tracking: -0.015em;
+
+  /* Tier 3: 卡片/模块标题 (Title Medium) - Admin: 16px / Portal: 20px */
+  --md-type-title-md-size: 16px;
+  --md-type-title-md-lh: 24px;
+  --md-type-title-md-weight: 600;
+  --md-type-title-md-tracking: normal;
+
+  /* Tier 4: 主力正文与列表主行 (Body) - Admin: 14px / Portal: 15px */
+  --md-type-body-size: 14px;
+  --md-type-body-lh: 22px;
+  --md-type-body-weight: 400;
+  --md-type-body-tracking: normal;
+
+  /* Tier 5: 辅助元数据与徽章 (Meta) - Admin: 12px / Portal: 13px (全站严禁小于 12px) */
+  --md-type-meta-size: 12px;
+  --md-type-meta-lh: 18px;
+  --md-type-meta-weight: 500;
+  --md-type-meta-tracking: normal;
 }
 
 /* ==========================================================================
@@ -196,6 +239,32 @@
   --md-space-section: 48px;
   --md-grid-gap: 24px;
   --md-card-padding: 28px;
+
+  /* 官网 5 级模数音阶 (总跨度收敛至 3.23x: 42px / 13px) */
+  --md-type-display-size: 42px;
+  --md-type-display-lh: 50px;
+  --md-type-display-weight: 700;
+  --md-type-display-tracking: -0.02em;
+
+  --md-type-title-lg-size: 28px;
+  --md-type-title-lg-lh: 36px;
+  --md-type-title-lg-weight: 700;
+  --md-type-title-lg-tracking: -0.015em;
+
+  --md-type-title-md-size: 20px;
+  --md-type-title-md-lh: 28px;
+  --md-type-title-md-weight: 600;
+  --md-type-title-md-tracking: normal;
+
+  --md-type-body-size: 15px;
+  --md-type-body-lh: 24px;
+  --md-type-body-weight: 400;
+  --md-type-body-tracking: normal;
+
+  --md-type-meta-size: 13px;
+  --md-type-meta-lh: 18px;
+  --md-type-meta-weight: 500;
+  --md-type-meta-tracking: normal;
 }
 
 /* 2. 后台管理模式 (Admin Context) */
@@ -206,6 +275,32 @@
   --md-space-section: 24px;
   --md-grid-gap: 16px;
   --md-card-padding: 16px;
+
+  /* 后台 5 级模数音阶 (总跨度收敛至 2.16x: 26px / 12px) */
+  --md-type-display-size: 26px;
+  --md-type-display-lh: 32px;
+  --md-type-display-weight: 700;
+  --md-type-display-tracking: -0.02em;
+
+  --md-type-title-lg-size: 20px;
+  --md-type-title-lg-lh: 28px;
+  --md-type-title-lg-weight: 700;
+  --md-type-title-lg-tracking: -0.015em;
+
+  --md-type-title-md-size: 16px;
+  --md-type-title-md-lh: 24px;
+  --md-type-title-md-weight: 600;
+  --md-type-title-md-tracking: normal;
+
+  --md-type-body-size: 14px;
+  --md-type-body-lh: 22px;
+  --md-type-body-weight: 400;
+  --md-type-body-tracking: normal;
+
+  --md-type-meta-size: 12px;
+  --md-type-meta-lh: 18px;
+  --md-type-meta-weight: 500;
+  --md-type-meta-tracking: normal;
 }
 
 /* ==========================================================================

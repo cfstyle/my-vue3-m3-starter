@@ -9,6 +9,10 @@
   padding: 0;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   width: 100%;
@@ -71,26 +75,88 @@ input:focus-visible {
   background: var(--md-sys-color-outline);
 }
 
-/* Common Typography Utilities based on M3 Expressive specs */
-.display-large   { font-size: 3.5rem; line-height: 1.1; font-weight: 800; letter-spacing: -0.035em; }
-.display-medium  { font-size: 2.75rem; line-height: 1.14; font-weight: 700; letter-spacing: -0.025em; }
-.display-small   { font-size: 2.25rem; line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; }
+/* ==========================================================================
+   5 级双端语义模数音阶 (Modular Type Scale Utilities)
+   彻底废弃散落的 11px、32px、48px 等非标字号，建立双端 5 级严格音阶：
+   Admin: 26px -> 12px (跨度 2.16x)
+   Portal: 42px -> 13px (跨度 3.23x)
+   ========================================================================== */
 
-.headline-large  { font-size: 2.5rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
-.headline-medium { font-size: 1.85rem; line-height: 1.22; font-weight: 700; letter-spacing: -0.015em; }
-.headline-small  { font-size: 1.5rem; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+/* Tier 1: 视觉焦点（Admin: 26px/32px KPI 大数字; Portal: 42px/50px Hero 主标题） */
+.type-display {
+  font-size: var(--md-type-display-size);
+  line-height: var(--md-type-display-lh);
+  font-weight: var(--md-type-display-weight);
+  letter-spacing: var(--md-type-display-tracking);
+  font-variant-numeric: tabular-nums;
+}
 
-.title-large     { font-size: 1.35rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.005em; }
-.title-medium    { font-size: 1rem; line-height: 1.4; font-weight: 600; letter-spacing: 0.005em; }
-.title-small     { font-size: 0.875rem; line-height: 1.4; font-weight: 600; letter-spacing: 0.01em; }
+/* Tier 2: 页面/区块标题（Admin: 20px/28px 页面顶部 H1; Portal: 28px/36px Bento 区块 H2） */
+.type-title-lg {
+  font-size: var(--md-type-title-lg-size);
+  line-height: var(--md-type-title-lg-lh);
+  font-weight: var(--md-type-title-lg-weight);
+  letter-spacing: var(--md-type-title-lg-tracking);
+}
 
-.label-large     { font-size: 0.875rem; line-height: 1.3; font-weight: 600; letter-spacing: 0.015em; }
-.label-medium    { font-size: 0.75rem; line-height: 1.3; font-weight: 600; letter-spacing: 0.025em; }
-.label-small     { font-size: 0.6875rem; line-height: 1.3; font-weight: 600; letter-spacing: 0.03em; }
+/* Tier 3: 卡片/模块标题（Admin: 16px/24px; Portal: 20px/28px） */
+.type-title-md {
+  font-size: var(--md-type-title-md-size);
+  line-height: var(--md-type-title-md-lh);
+  font-weight: var(--md-type-title-md-weight);
+  letter-spacing: var(--md-type-title-md-tracking);
+}
 
-.body-large      { font-size: 1.0625rem; line-height: 1.55; font-weight: 400; letter-spacing: 0.015em; }
-.body-medium     { font-size: 0.875rem; line-height: 1.5; font-weight: 400; letter-spacing: 0.01em; }
-.body-small      { font-size: 0.75rem; line-height: 1.45; font-weight: 400; letter-spacing: 0.015em; }
+/* Tier 4: 主力正文与列表主行（Admin: 14px/22px; Portal: 15px/24px） */
+.type-body {
+  font-size: var(--md-type-body-size);
+  line-height: var(--md-type-body-lh);
+  font-weight: var(--md-type-body-weight);
+  letter-spacing: var(--md-type-body-tracking);
+}
+
+/* Tier 5: 辅助元数据与徽章（Admin: 12px/18px; Portal: 13px/18px） - 全站严禁小于 12px */
+.type-meta {
+  font-size: var(--md-type-meta-size);
+  line-height: var(--md-type-meta-lh);
+  font-weight: var(--md-type-meta-weight);
+  letter-spacing: var(--md-type-meta-tracking);
+}
+
+/* 字重与字距辅助类 */
+.font-normal {
+  font-weight: 400;
+}
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+/* 兼容与平滑收敛层：将历史 M3 类名映射到 5 级音阶体系，禁止任何低于 12px 的字号 */
+.display-large,
+.display-medium,
+.display-small   { font-size: var(--md-type-display-size); line-height: var(--md-type-display-lh); font-weight: var(--md-type-display-weight); letter-spacing: var(--md-type-display-tracking); }
+
+.headline-large,
+.headline-medium { font-size: var(--md-type-title-lg-size); line-height: var(--md-type-title-lg-lh); font-weight: var(--md-type-title-lg-weight); letter-spacing: var(--md-type-title-lg-tracking); }
+.headline-small  { font-size: var(--md-type-title-md-size); line-height: var(--md-type-title-md-lh); font-weight: var(--md-type-title-md-weight); }
+
+.title-large     { font-size: var(--md-type-title-lg-size); line-height: var(--md-type-title-lg-lh); font-weight: var(--md-type-title-lg-weight); }
+.title-medium,
+.title-small     { font-size: var(--md-type-title-md-size); line-height: var(--md-type-title-md-lh); font-weight: var(--md-type-title-md-weight); }
+
+.label-large     { font-size: var(--md-type-body-size); line-height: var(--md-type-body-lh); font-weight: 500; }
+.label-medium,
+.label-small     { font-size: var(--md-type-meta-size); line-height: var(--md-type-meta-lh); font-weight: 500; }
+
+.body-large,
+.body-medium     { font-size: var(--md-type-body-size); line-height: var(--md-type-body-lh); font-weight: var(--md-type-body-weight); }
+.body-small      { font-size: var(--md-type-meta-size); line-height: var(--md-type-meta-lh); font-weight: 400; }
 
 /* M3 Expressive Geometric Badge Container (48px x 48px, 16px corner) */
 .m3-geometric-badge {
@@ -108,4 +174,27 @@ input:focus-visible {
 .tabular-nums {
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   M3 胶囊徽章与防折行全局加固工具类 (Badge & No-Wrap Guard)
+   ========================================================================== */
+.type-badge {
+  font-size: var(--md-type-meta-size);
+  line-height: var(--md-type-meta-lh);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 全局防折行与防挤压原子辅助类 */
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
 }

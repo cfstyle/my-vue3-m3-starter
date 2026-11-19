@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useThemeStore } from '@/stores/theme'
+import MdSnackbar from '@/components/m3/MdSnackbar.vue'
 
 const themeStore = useThemeStore()
 
@@ -11,6 +12,7 @@ onMounted(() => {
 
 <template>
   <router-view />
+  <MdSnackbar />
 </template>
 
 <style>

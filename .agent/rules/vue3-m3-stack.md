@@ -37,5 +37,7 @@ trigger: always_on
 - 基础组件一律优先复用 `src/components/m3/` 目录下的原子组件：
   - `MdButton`: 支持 filled / tonal / outlined / text，全圆角 9999px，含 M3 Expressive 微动效。
   - `MdCard`: 支持 elevated / filled / outlined / primary-tonal / tertiary-tonal 五种形态，默认 24px 圆角。
+  - `MdSwitch`: 标准 52×32px 轨道，未选 16px 滑块，选中 24px 放大并支持勾选图标。
   - `AdaptiveModal`: 移动端底部滑出 Bottom Sheet，PC 端居中 Dialog 自动适配弹窗。
-- **禁止私自引入重型 UI 库**（如 Element Plus、Ant Design Vue 等），保持项目的纯粹与轻量性。
+  - `MdTable` & `MdPagination`: 零第三方依赖、Vue 3 全泛型约束的轻量表格与分页套件，支持多选、排序、骨架屏与插槽定制。
+- **禁止私自引入重型 UI 库**（如 Element Plus、Ant Design Vue 等），保持项目的纯粹与轻量性。常规列表使用 `MdTable`，超复杂交互仅允许套用 `@tanstack/vue-table` 无头逻辑。

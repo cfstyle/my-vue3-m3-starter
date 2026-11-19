@@ -98,8 +98,8 @@ const recentActivities = [
     <!-- 顶部业务标题栏 -->
     <header class="page-header">
       <div class="page-header__main">
-        <h1 class="headline-large">工作台概览</h1>
-        <p class="body-large text-secondary">
+        <h1 class="type-title-lg">工作台概览</h1>
+        <p class="type-body text-secondary">
           Material Design 3 纯净工程底座已就绪，已融合 HCT 调色算法与双轨自适应外壳。
         </p>
       </div>
@@ -130,15 +130,15 @@ const recentActivities = [
             <component :is="kpi.icon" :size="20" />
           </div>
 
-          <div class="kpi-trend label-medium" :class="{ 'is-positive': kpi.isPositive }">
+          <div class="kpi-trend type-meta" :class="{ 'is-positive': kpi.isPositive }">
             <TrendingUp v-if="kpi.isPositive" :size="14" />
             <span class="tabular-nums">{{ kpi.trend }}</span>
           </div>
         </div>
 
         <div class="kpi-card__bottom">
-          <span class="kpi-label label-medium">{{ kpi.title }}</span>
-          <span class="kpi-val display-small tabular-nums">{{ kpi.value }}</span>
+          <span class="kpi-label type-body font-medium">{{ kpi.title }}</span>
+          <span class="kpi-val type-display tabular-nums">{{ kpi.value }}</span>
         </div>
       </MdCard>
     </section>
@@ -151,9 +151,9 @@ const recentActivities = [
             <div class="activity-header__text">
               <div class="activity-title-row">
                 <Layers :size="20" class="text-primary" />
-                <h2 class="title-large">最近业务动态与就绪任务</h2>
+                <h2 class="type-title-md">最近业务动态与就绪任务</h2>
               </div>
-              <span class="body-small text-secondary">
+              <span class="type-body text-secondary">
                 实时追踪核心模块状态与生命周期事件，开箱即用的轻量看板骨架。
               </span>
             </div>
@@ -186,8 +186,8 @@ const recentActivities = [
                 <Clock v-else :size="16" />
               </div>
               <div class="activity-item__info">
-                <span class="body-medium activity-item__title">{{ item.title }}</span>
-                <div class="activity-item__meta body-small text-secondary">
+                <span class="activity-item__title type-body font-medium">{{ item.title }}</span>
+                <div class="activity-item__meta type-meta text-secondary">
                   <span class="meta-tag">{{ item.category }}</span>
                   <span class="meta-dot">·</span>
                   <span>{{ item.user }}</span>
@@ -196,17 +196,17 @@ const recentActivities = [
             </div>
 
             <div class="activity-item__right">
-              <span class="status-pill label-small" :class="`status-pill--${item.statusType}`">
+              <span class="status-pill type-meta" :class="`status-pill--${item.statusType}`">
                 {{ item.status }}
               </span>
-              <span class="body-small text-secondary tabular-nums">{{ item.time }}</span>
+              <span class="type-meta text-secondary tabular-nums">{{ item.time }}</span>
             </div>
           </div>
         </div>
 
         <template #actions>
           <div class="activity-footer">
-            <span class="body-small text-secondary">
+            <span class="type-meta text-secondary">
               显示最新 4 条动态 · 完整审计与监控已就绪
             </span>
             <MdButton variant="text" @click="goToPlayground">
@@ -320,9 +320,7 @@ const recentActivities = [
 }
 
 .kpi-val {
-  font-weight: 700;
   color: var(--md-sys-color-on-surface);
-  line-height: 1.15;
 }
 
 /* 2. 动态与任务列表卡片 */

@@ -103,7 +103,7 @@ onUnmounted(() => {
 .m3-modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: var(--z-modal, 50);
   background-color: rgba(0, 0, 0, 0.32);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);

@@ -215,7 +215,7 @@ onUnmounted(() => {
   top: 16px;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: var(--z-header, 30);
   width: 100%;
   margin-top: 16px;
   padding: 0 20px;
@@ -486,6 +486,19 @@ onUnmounted(() => {
 }
 
 /* 响应式断点控制 */
+@media (min-width: 768.02px) and (max-width: 1023.98px) {
+  .portal-nav-links {
+    gap: 2px;
+  }
+  .portal-nav-link {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  .portal-brand__tag {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .portal-nav-links {
     display: none;

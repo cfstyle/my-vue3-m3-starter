@@ -34,8 +34,8 @@ const notifications = [
   <div class="messages-view">
     <div class="page-header">
       <div>
-        <h1 class="headline-medium">消息通知中心</h1>
-        <p class="body-medium text-secondary">系统通知与业务实时动态</p>
+        <h1 class="type-title-lg">消息通知中心</h1>
+        <p class="type-body text-secondary">系统通知与业务实时动态</p>
       </div>
       <MdButton variant="text">
         <template #icon><CheckCheck /></template>
@@ -55,10 +55,10 @@ const notifications = [
         </div>
         <div class="notify-content">
           <div class="notify-title-row">
-            <span class="title-medium">{{ item.title }}</span>
-            <span class="label-small text-secondary">{{ item.time }}</span>
+            <span class="type-title-md">{{ item.title }}</span>
+            <span class="type-meta text-secondary tabular-nums">{{ item.time }}</span>
           </div>
-          <p class="body-medium text-secondary">{{ item.content }}</p>
+          <p class="type-body text-secondary">{{ item.content }}</p>
         </div>
       </MdCard>
     </div>

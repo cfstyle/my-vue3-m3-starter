@@ -285,8 +285,8 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
     <!-- 页面标题与顶部操作栏 -->
     <div class="page-header">
       <div>
-        <h1 class="headline-medium">数据分析中心</h1>
-        <p class="body-medium text-secondary">Google AI Studio 级全维度实时流量与性能监控</p>
+        <h1 class="type-title-lg">数据分析中心</h1>
+        <p class="type-body text-secondary">Google AI Studio 级全维度实时流量与性能监控</p>
       </div>
       <div class="header-actions">
         <!-- 周期切换微胶囊 -->
@@ -295,7 +295,7 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
             v-for="p in periods"
             :key="p.key"
             type="button"
-            class="period-capsule md-state-layer"
+            class="period-capsule type-meta md-state-layer"
             :class="{ 'is-active': activePeriod === p.key }"
             @click="activePeriod = p.key"
           >
@@ -323,21 +323,21 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
         <template #header>
           <div class="card-title-bar">
             <div class="card-title-group">
-              <span class="title-medium">API / 业务请求总览</span>
-              <span class="label-medium text-secondary">吞吐量 & 成功率</span>
+              <span class="type-title-md">API / 业务请求总览</span>
+              <span class="type-meta text-secondary">吞吐量 & 成功率</span>
             </div>
 
             <!-- 顶部轻量 KPI 摘要 -->
             <div class="throughput-summary">
               <div class="summary-item">
-                <span class="body-small text-secondary">总吞吐量</span>
-                <span class="title-medium tabular-nums font-bold">{{ periodSummary.total }}</span>
+                <span class="type-meta text-secondary">总吞吐量</span>
+                <span class="type-title-md tabular-nums font-bold">{{ periodSummary.total }}</span>
               </div>
               <div class="summary-item">
-                <span class="body-small text-secondary">平均成功率</span>
-                <span class="title-medium tabular-nums font-bold text-success">{{ periodSummary.success }}</span>
+                <span class="type-meta text-secondary">平均成功率</span>
+                <span class="type-title-md tabular-nums font-bold text-success">{{ periodSummary.success }}</span>
               </div>
-              <div class="summary-pill label-small">
+              <div class="summary-pill type-meta whitespace-nowrap shrink-0">
                 <TrendingUp :size="14" />
                 <span class="tabular-nums">{{ periodSummary.trend }}</span>
               </div>
@@ -357,29 +357,29 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
             }"
           >
             <div class="tooltip-header">
-              <span class="label-large font-bold">{{ hoveredPoint1.fullDate }}</span>
-              <span v-if="hoveredPoint1.isPeak" class="peak-tag label-small">吞吐峰值</span>
+              <span class="type-body font-bold whitespace-nowrap">{{ hoveredPoint1.fullDate }}</span>
+              <span v-if="hoveredPoint1.isPeak" class="peak-tag type-meta whitespace-nowrap shrink-0">吞吐峰值</span>
             </div>
             <div class="tooltip-divider"></div>
             <div class="tooltip-metrics">
               <div class="metric-row">
                 <span class="legend-shape shape-square bg-primary"></span>
-                <span class="body-small text-secondary">请求吞吐量</span>
-                <span class="label-medium tabular-nums font-bold ml-auto">
+                <span class="type-meta text-secondary whitespace-nowrap">请求吞吐量</span>
+                <span class="type-meta tabular-nums font-bold ml-auto whitespace-nowrap">
                   {{ hoveredPoint1.requests.toLocaleString() }} 次
                 </span>
               </div>
               <div class="metric-row">
                 <span class="legend-shape shape-circle bg-success"></span>
-                <span class="body-small text-secondary">接口成功率</span>
-                <span class="label-medium tabular-nums font-bold text-success ml-auto">
+                <span class="type-meta text-secondary whitespace-nowrap">接口成功率</span>
+                <span class="type-meta tabular-nums font-bold text-success ml-auto whitespace-nowrap">
                   {{ hoveredPoint1.successRate }}%
                 </span>
               </div>
               <div class="metric-row">
                 <Activity :size="12" class="text-secondary" />
-                <span class="body-small text-secondary">平均时延</span>
-                <span class="label-medium tabular-nums font-bold ml-auto">
+                <span class="type-meta text-secondary whitespace-nowrap">平均时延</span>
+                <span class="type-meta tabular-nums font-bold ml-auto whitespace-nowrap">
                   {{ hoveredPoint1.avgLatency }} ms
                 </span>
               </div>
@@ -550,15 +550,15 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
 
         <!-- 底部图例说明与信息摘要 -->
         <div class="chart-legend-row">
-          <div class="legend-item body-small text-secondary">
+          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
             <span class="legend-shape shape-square bg-primary"></span>
             <span>请求吞吐量 (Throughput, 默认主色)</span>
           </div>
-          <div class="legend-item body-small text-secondary">
+          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
             <span class="legend-shape shape-circle bg-success"></span>
             <span>接口成功率 (Success Rate, 语义绿)</span>
           </div>
-          <div class="legend-item body-small text-secondary ml-auto">
+          <div class="legend-item type-meta text-secondary ml-auto whitespace-nowrap shrink-0">
             <Zap :size="14" class="text-primary" />
             <span>实时聚合 · 采样周期 1m</span>
           </div>
@@ -572,10 +572,10 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
         <template #header>
           <div class="card-title-bar">
             <div class="card-title-group">
-              <span class="title-medium">异常与状态分布</span>
-              <span class="label-medium text-secondary">HTTP Code 堆叠</span>
+              <span class="type-title-md">异常与状态分布</span>
+              <span class="type-meta text-secondary whitespace-nowrap">HTTP Code 堆叠</span>
             </div>
-            <div class="summary-pill success label-small">
+            <div class="summary-pill success type-meta font-bold whitespace-nowrap shrink-0">
               <CheckCircle2 :size="14" />
               <span class="tabular-nums">可用性 99.89%</span>
             </div>
@@ -594,35 +594,35 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
             }"
           >
             <div class="tooltip-header">
-              <span class="label-large font-bold">{{ hoveredPoint2.fullDate }}</span>
+              <span class="type-body font-bold whitespace-nowrap">{{ hoveredPoint2.fullDate }}</span>
             </div>
             <div class="tooltip-divider"></div>
             <div class="tooltip-metrics">
               <div class="metric-row">
                 <span class="legend-shape shape-circle bg-success"></span>
-                <span class="body-small text-secondary">2xx 正常响应</span>
-                <span class="label-medium tabular-nums font-bold text-success ml-auto">
+                <span class="type-meta text-secondary whitespace-nowrap">2xx 正常响应</span>
+                <span class="type-meta tabular-nums font-bold text-success ml-auto whitespace-nowrap">
                   {{ hoveredPoint2.status2xx.toLocaleString() }}
                 </span>
               </div>
               <div class="metric-row">
                 <span class="legend-shape shape-square bg-secondary"></span>
-                <span class="body-small text-secondary">3xx 缓存重定向</span>
-                <span class="label-medium tabular-nums font-bold ml-auto">
+                <span class="type-meta text-secondary whitespace-nowrap">3xx 缓存重定向</span>
+                <span class="type-meta tabular-nums font-bold ml-auto whitespace-nowrap">
                   {{ hoveredPoint2.status3xx.toLocaleString() }}
                 </span>
               </div>
               <div class="metric-row">
                 <span class="legend-shape shape-diamond bg-warning"></span>
-                <span class="body-small text-secondary">4xx 客户端异常</span>
-                <span class="label-medium tabular-nums font-bold text-warning ml-auto">
+                <span class="type-meta text-secondary whitespace-nowrap">4xx 客户端异常</span>
+                <span class="type-meta tabular-nums font-bold text-warning ml-auto whitespace-nowrap">
                   {{ hoveredPoint2.status4xx.toLocaleString() }}
                 </span>
               </div>
               <div class="metric-row">
                 <span class="legend-shape shape-triangle bg-error"></span>
-                <span class="body-small text-secondary">5xx 服务端错误</span>
-                <span class="label-medium tabular-nums font-bold text-error ml-auto">
+                <span class="type-meta text-secondary whitespace-nowrap">5xx 服务端错误</span>
+                <span class="type-meta tabular-nums font-bold text-error ml-auto whitespace-nowrap">
                   {{ hoveredPoint2.status5xx.toLocaleString() }}
                 </span>
               </div>
@@ -768,19 +768,19 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
 
         <!-- 底部形状编码四态图例 -->
         <div class="chart-legend-row">
-          <div class="legend-item body-small text-secondary">
+          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
             <span class="legend-shape shape-circle bg-success"></span>
             <span>2xx 成功</span>
           </div>
-          <div class="legend-item body-small text-secondary">
+          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
             <span class="legend-shape shape-square bg-secondary"></span>
             <span>3xx 缓存</span>
           </div>
-          <div class="legend-item body-small text-secondary">
+          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
             <span class="legend-shape shape-diamond bg-warning"></span>
             <span>4xx 客户端</span>
           </div>
-          <div class="legend-item body-small text-secondary">
+          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
             <span class="legend-shape shape-triangle bg-error"></span>
             <span>5xx 服务端</span>
           </div>
@@ -795,16 +795,16 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
           <div class="card-title-bar">
             <div class="card-title-group">
               <Layers :size="18" class="text-primary" />
-              <span class="title-medium">终端自适应流量占比</span>
+              <span class="type-title-md">终端自适应流量占比</span>
             </div>
-            <span class="label-medium text-secondary">全端响应</span>
+            <span class="type-meta text-secondary whitespace-nowrap">全端响应</span>
           </div>
         </template>
         <div class="ratio-list">
           <div class="ratio-item">
             <div class="ratio-label">
-              <span class="body-medium">桌面宽屏 (Expanded &gt;= 840px)</span>
-              <span class="label-large tabular-nums font-bold">54%</span>
+              <span class="type-body font-medium">桌面宽屏 (Expanded &gt;= 840px)</span>
+              <span class="type-body tabular-nums font-bold">54%</span>
             </div>
             <div class="ratio-bar-track">
               <div class="ratio-bar-fill" style="width: 54%;"></div>
@@ -813,8 +813,8 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
 
           <div class="ratio-item">
             <div class="ratio-label">
-              <span class="body-medium">移动终端 (Compact &lt; 600px)</span>
-              <span class="label-large tabular-nums font-bold">36%</span>
+              <span class="type-body font-medium">移动终端 (Compact &lt; 600px)</span>
+              <span class="type-body tabular-nums font-bold">36%</span>
             </div>
             <div class="ratio-bar-track">
               <div class="ratio-bar-fill secondary" style="width: 36%;"></div>
@@ -823,8 +823,8 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
 
           <div class="ratio-item">
             <div class="ratio-label">
-              <span class="body-medium">平板窄边 (Medium 600px - 839px)</span>
-              <span class="label-large tabular-nums font-bold">10%</span>
+              <span class="type-body font-medium">平板窄边 (Medium 600px - 839px)</span>
+              <span class="type-body tabular-nums font-bold">10%</span>
             </div>
             <div class="ratio-bar-track">
               <div class="ratio-bar-fill tertiary" style="width: 10%;"></div>
@@ -838,26 +838,26 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
           <div class="card-title-bar">
             <div class="card-title-group">
               <ShieldAlert :size="18" class="text-primary" />
-              <span class="title-medium">安全风控与防火墙拦截</span>
+              <span class="type-title-md">安全风控与防火墙拦截</span>
             </div>
-            <span class="label-medium text-success">正常防护中</span>
+            <span class="type-meta text-success font-medium whitespace-nowrap">正常防护中</span>
           </div>
         </template>
         <div class="security-stats-grid">
           <div class="security-stat-box">
-            <span class="body-small text-secondary">今日 WAF 拦截</span>
-            <span class="title-large tabular-nums font-bold text-warning">1,428 次</span>
-            <span class="body-small text-secondary">环比下降 4.2%</span>
+            <span class="type-meta text-secondary">今日 WAF 拦截</span>
+            <span class="type-title-md tabular-nums font-bold text-warning">1,428 次</span>
+            <span class="type-meta text-secondary">环比下降 4.2%</span>
           </div>
           <div class="security-stat-box">
-            <span class="body-small text-secondary">CC / 频控限制</span>
-            <span class="title-large tabular-nums font-bold">382 次</span>
-            <span class="body-small text-secondary">自动隔离 15m</span>
+            <span class="type-meta text-secondary">CC / 频控限制</span>
+            <span class="type-title-md tabular-nums font-bold">382 次</span>
+            <span class="type-meta text-secondary">自动隔离 15m</span>
           </div>
           <div class="security-stat-box">
-            <span class="body-small text-secondary">平均鉴权延迟</span>
-            <span class="title-large tabular-nums font-bold text-success">3.2 ms</span>
-            <span class="body-small text-secondary">边缘节点校验</span>
+            <span class="type-meta text-secondary">平均鉴权延迟</span>
+            <span class="type-title-md tabular-nums font-bold text-success">3.2 ms</span>
+            <span class="type-meta text-secondary">边缘节点校验</span>
           </div>
         </div>
       </MdCard>
@@ -918,7 +918,6 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
   border: none;
   background: transparent;
   color: var(--md-sys-color-on-surface-variant);
-  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: all var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
@@ -1041,6 +1040,8 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
   background-color: var(--chart-success-bg);
   color: var(--chart-success);
   font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .summary-pill.warning {
@@ -1071,13 +1072,13 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
 /* 坐标轴刻度文字 */
 .svg-axis-text {
   fill: var(--md-sys-color-on-surface-variant);
-  font-size: 11px;
+  font-size: var(--md-type-meta-size, 12px);
   user-select: none;
 }
 
 .svg-x-text {
   fill: var(--md-sys-color-on-surface-variant);
-  font-size: 12px;
+  font-size: var(--md-type-meta-size, 12px);
   font-weight: 500;
   user-select: none;
   transition: fill 0.2s ease, font-weight 0.2s ease;
@@ -1090,7 +1091,7 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
 
 .svg-x-subtext {
   fill: var(--md-sys-color-on-surface-variant);
-  font-size: 10px;
+  font-size: var(--md-type-meta-size, 12px);
   user-select: none;
   opacity: 0.8;
 }
@@ -1146,7 +1147,8 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
   color: var(--md-sys-color-on-surface);
   pointer-events: none;
   z-index: 20;
-  min-width: 180px;
+  min-width: 228px;
+  width: max-content;
   backdrop-filter: blur(12px);
   transition: left 0.15s ease, transform 0.15s ease;
 }
@@ -1155,16 +1157,21 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
+  white-space: nowrap;
 }
 
 .peak-tag {
-  padding: 1px 6px;
+  padding: 2px 8px;
   border-radius: var(--md-sys-shape-corner-full);
   background-color: var(--md-sys-color-primary);
   color: var(--md-sys-color-on-primary);
   font-weight: 700;
-  font-size: 10px;
+  font-size: var(--md-type-meta-size, 12px);
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
 }
 
 .tooltip-divider {
@@ -1185,6 +1192,7 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
   display: flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
 }
 
 /* 底部图例 */
@@ -1201,6 +1209,8 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
   display: flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* 形状编码图例 (Circle / Square / Diamond / Triangle) */

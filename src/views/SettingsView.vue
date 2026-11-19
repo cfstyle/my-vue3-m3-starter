@@ -9,8 +9,8 @@ const themeStore = useThemeStore()
 <template>
   <div class="settings-view">
     <div class="page-header">
-      <h1 class="headline-medium">偏好与系统设置</h1>
-      <p class="body-medium text-secondary">个性化配置应用外观与运行参数</p>
+      <h1 class="type-title-lg">偏好与系统设置</h1>
+      <p class="type-body text-secondary">个性化配置应用外观与运行参数</p>
     </div>
 
     <div class="settings-list">
@@ -19,7 +19,7 @@ const themeStore = useThemeStore()
         <template #header>
           <div class="setting-card__header">
             <Palette :size="22" class="text-primary" />
-            <span class="title-medium">主题与外观 (Material You)</span>
+            <span class="type-title-md">主题与外观 (Material You)</span>
           </div>
         </template>
 
@@ -32,7 +32,7 @@ const themeStore = useThemeStore()
             <div class="theme-preview light">
               <Sun :size="24" />
             </div>
-            <span class="label-large">浅色模式</span>
+            <span class="type-body font-medium">浅色模式</span>
           </div>
 
           <div
@@ -43,15 +43,15 @@ const themeStore = useThemeStore()
             <div class="theme-preview dark">
               <Moon :size="24" />
             </div>
-            <span class="label-large">深色模式</span>
+            <span class="type-body font-medium">深色模式</span>
           </div>
         </div>
 
         <!-- 种子色切换区 (HCT 动态色板，含银行与金融专属) -->
         <div class="seed-colors-section">
           <div class="seed-title-row">
-            <span class="label-large seed-title">HCT 动态种子色切换 (Tone 90 容器平衡规范)</span>
-            <span class="body-small text-secondary">单一数据源 · 覆盖通用商务与银行金融专属场景</span>
+            <span class="type-body font-medium seed-title">HCT 动态种子色切换 (Tone 90 容器平衡规范)</span>
+            <span class="type-meta text-secondary">单一数据源 · 覆盖通用商务与银行金融专属场景</span>
           </div>
           <div class="seed-colors-grid">
             <button
@@ -64,8 +64,8 @@ const themeStore = useThemeStore()
               @click="themeStore.setSeedColor(preset.hex)"
             >
               <span class="seed-swatch" :style="{ backgroundColor: preset.hex }"></span>
-              <span class="label-large">{{ preset.name }}</span>
-              <span class="seed-category-tag label-small">{{ preset.category }}</span>
+              <span class="type-body font-medium">{{ preset.name }}</span>
+              <span class="seed-category-tag type-meta">{{ preset.category }}</span>
             </button>
           </div>
         </div>
@@ -73,7 +73,7 @@ const themeStore = useThemeStore()
         <!-- 场景与密度切换区 -->
         <div class="context-density-section">
           <div class="setting-sub-group">
-            <span class="label-large seed-title">场景预设 (Context Preset)</span>
+            <span class="type-body font-medium seed-title">场景预设 (Context Preset)</span>
             <div class="seed-colors-grid">
               <button
                 type="button"
@@ -81,7 +81,7 @@ const themeStore = useThemeStore()
                 :class="{ 'is-active': themeStore.layoutContext === 'admin' }"
                 @click="themeStore.setLayoutContext('admin')"
               >
-                <span class="label-large">后台工作台 (Admin, 16px 圆角)</span>
+                <span class="type-body font-medium">后台工作台 (Admin, 16px 圆角)</span>
               </button>
               <button
                 type="button"
@@ -89,13 +89,13 @@ const themeStore = useThemeStore()
                 :class="{ 'is-active': themeStore.layoutContext === 'portal' }"
                 @click="themeStore.setLayoutContext('portal')"
               >
-                <span class="label-large">产品展示官网 (Portal, 24px 圆角)</span>
+                <span class="type-body font-medium">产品展示官网 (Portal, 24px 圆角)</span>
               </button>
             </div>
           </div>
 
           <div class="setting-sub-group">
-            <span class="label-large seed-title">布局密度 (Density)</span>
+            <span class="type-body font-medium seed-title">布局密度 (Density)</span>
             <div class="seed-colors-grid">
               <button
                 type="button"
@@ -103,7 +103,7 @@ const themeStore = useThemeStore()
                 :class="{ 'is-active': themeStore.density === 'comfortable' }"
                 @click="themeStore.setDensity('comfortable')"
               >
-                <span class="label-large">舒适 (Comfortable)</span>
+                <span class="type-body font-medium">舒适 (Comfortable)</span>
               </button>
               <button
                 type="button"
@@ -111,7 +111,7 @@ const themeStore = useThemeStore()
                 :class="{ 'is-active': themeStore.density === 'compact' }"
                 @click="themeStore.setDensity('compact')"
               >
-                <span class="label-large">紧凑 (Compact)</span>
+                <span class="type-body font-medium">紧凑 (Compact)</span>
               </button>
             </div>
           </div>
@@ -123,25 +123,25 @@ const themeStore = useThemeStore()
         <template #header>
           <div class="setting-card__header">
             <Monitor :size="22" class="text-primary" />
-            <span class="title-medium">断点规范与响应式设计</span>
+            <span class="type-title-md">断点规范与响应式设计</span>
           </div>
         </template>
 
         <div class="breakpoints-table">
           <div class="bp-row">
-            <span class="bp-name label-large">Compact (手机端)</span>
-            <span class="bp-range body-medium">&lt; 600px</span>
-            <span class="bp-desc body-small text-secondary">底部 80px 导航栏 + 64px 顶栏 + 底部滑动抽屉</span>
+            <span class="bp-name type-body font-medium">Compact (手机端)</span>
+            <span class="bp-range type-body tabular-nums">&lt; 600px</span>
+            <span class="bp-desc type-meta text-secondary">底部 80px 导航栏 + 64px 顶栏 + 底部滑动抽屉</span>
           </div>
           <div class="bp-row">
-            <span class="bp-name label-large">Medium (平板端)</span>
-            <span class="bp-range body-medium">600px - 839px</span>
-            <span class="bp-desc body-small text-secondary">左侧 80px 窄边导航轨 + 居中对话框</span>
+            <span class="bp-name type-body font-medium">Medium (平板端)</span>
+            <span class="bp-range type-body tabular-nums">600px - 839px</span>
+            <span class="bp-desc type-meta text-secondary">左侧 80px 窄边导航轨 + 居中对话框</span>
           </div>
           <div class="bp-row">
-            <span class="bp-name label-large">Expanded (桌面端)</span>
-            <span class="bp-range body-medium">&gt;= 840px</span>
-            <span class="bp-desc body-small text-secondary">左侧 260px 展开导航抽屉 + 居中阅读区域</span>
+            <span class="bp-name type-body font-medium">Expanded (桌面端)</span>
+            <span class="bp-range type-body tabular-nums">&gt;= 840px</span>
+            <span class="bp-desc type-meta text-secondary">左侧 260px 展开导航抽屉 + 居中阅读区域</span>
           </div>
         </div>
       </MdCard>
@@ -214,8 +214,8 @@ const themeStore = useThemeStore()
   border-radius: var(--md-sys-shape-corner-full);
   background-color: var(--md-sys-color-surface-container-high);
   color: var(--md-sys-color-on-surface-variant);
-  font-size: 11px;
-  line-height: 16px;
+  font-size: var(--md-type-meta-size, 12px);
+  line-height: var(--md-type-meta-lh, 18px);
   transition: all 0.2s ease;
 }
 
