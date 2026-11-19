@@ -15,7 +15,7 @@ body {
   min-height: 100vh;
   background-color: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface);
-  font-family: "Plus Jakarta Sans", "Noto Sans SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'OPPO Sans', 'HarmonyOS Sans SC', 'PingFang SC', 'Noto Sans SC', -apple-system, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -102,4 +102,10 @@ input:focus-visible {
   justify-content: center;
   flex-shrink: 0;
   transition: transform 0.25s cubic-bezier(0.2, 0.0, 0, 1.0);
+}
+
+/* Tabular Numbers Utility for KPIs and Data */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }

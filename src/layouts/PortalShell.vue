@@ -49,6 +49,7 @@ const goToAdmin = () => {
 }
 
 onMounted(() => {
+  themeStore.setLayoutContext('portal')
   window.addEventListener('scroll', handleScroll, { passive: true })
 })
 

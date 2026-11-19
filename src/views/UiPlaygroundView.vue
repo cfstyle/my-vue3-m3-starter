@@ -135,7 +135,7 @@ const expressiveCards = [
 
           <div class="card-main-content">
             <span class="card-title label-large">{{ card.title }}</span>
-            <span class="card-value display-small">{{ card.value }}</span>
+            <span class="card-value display-small tabular-nums">{{ card.value }}</span>
             <span class="card-caption body-small">{{ card.caption }}</span>
           </div>
         </MdCard>

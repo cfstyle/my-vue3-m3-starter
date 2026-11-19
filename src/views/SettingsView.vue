@@ -46,6 +46,71 @@ const themeStore = useThemeStore()
             <span class="label-large">深色模式</span>
           </div>
         </div>
+
+        <!-- 种子色切换区 (HCT 动态色板) -->
+        <div class="seed-colors-section">
+          <span class="label-large seed-title">HCT 动态种子色切换 (Tone 90 容器平衡)</span>
+          <div class="seed-colors-grid">
+            <button
+              v-for="preset in themeStore.seedPresets"
+              :key="preset.key"
+              type="button"
+              class="seed-color-pill md-state-layer"
+              :class="{ 'is-active': themeStore.seedColor === preset.hex }"
+              @click="themeStore.setSeedColor(preset.hex)"
+            >
+              <span class="seed-swatch" :style="{ backgroundColor: preset.hex }"></span>
+              <span class="label-large">{{ preset.name }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 场景与密度切换区 -->
+        <div class="context-density-section">
+          <div class="setting-sub-group">
+            <span class="label-large seed-title">场景预设 (Context Preset)</span>
+            <div class="seed-colors-grid">
+              <button
+                type="button"
+                class="seed-color-pill md-state-layer"
+                :class="{ 'is-active': themeStore.layoutContext === 'admin' }"
+                @click="themeStore.setLayoutContext('admin')"
+              >
+                <span class="label-large">后台工作台 (Admin, 16px 圆角)</span>
+              </button>
+              <button
+                type="button"
+                class="seed-color-pill md-state-layer"
+                :class="{ 'is-active': themeStore.layoutContext === 'portal' }"
+                @click="themeStore.setLayoutContext('portal')"
+              >
+                <span class="label-large">产品展示官网 (Portal, 24px 圆角)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-sub-group">
+            <span class="label-large seed-title">布局密度 (Density)</span>
+            <div class="seed-colors-grid">
+              <button
+                type="button"
+                class="seed-color-pill md-state-layer"
+                :class="{ 'is-active': themeStore.density === 'comfortable' }"
+                @click="themeStore.setDensity('comfortable')"
+              >
+                <span class="label-large">舒适 (Comfortable)</span>
+              </button>
+              <button
+                type="button"
+                class="seed-color-pill md-state-layer"
+                :class="{ 'is-active': themeStore.density === 'compact' }"
+                @click="themeStore.setDensity('compact')"
+              >
+                <span class="label-large">紧凑 (Compact)</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </MdCard>
 
       <!-- 双端断点说明 -->
@@ -120,6 +185,68 @@ const themeStore = useThemeStore()
   display: flex;
   gap: 20px;
   margin-top: 12px;
+}
+
+.seed-colors-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.context-density-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.setting-sub-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.seed-title {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+}
+
+.seed-colors-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.seed-color-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  transition: all 0.2s ease;
+}
+
+.seed-color-pill.is-active {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border-color: var(--md-sys-color-primary);
+  font-weight: 600;
+}
+
+.seed-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--md-sys-shape-corner-full);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--md-sys-color-outline-variant);
 }
 
 .theme-box {

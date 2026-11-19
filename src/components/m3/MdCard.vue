@@ -47,8 +47,8 @@ defineEmits<{
 .m3-card {
   position: relative;
   box-sizing: border-box;
-  border-radius: var(--md-sys-shape-corner-large, 24px);
-  padding: 20px;
+  border-radius: var(--md-radius-card, 24px);
+  padding: var(--md-card-padding, 20px);
   display: flex;
   flex-direction: column;
   transition: transform 0.25s cubic-bezier(0.2, 0.0, 0, 1.0),
