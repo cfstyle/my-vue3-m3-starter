@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { MdCard, MdButton } from '@/components/m3'
-import { Bell, CheckCheck, Info, AlertTriangle, Sparkles } from 'lucide-vue-next'
+import { CheckCheck, Info, AlertTriangle, Sparkles } from 'lucide-vue-next'
 
 const notifications = [
   {

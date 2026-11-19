@@ -5,13 +5,9 @@ import {
   ArrowRight,
   Palette,
   Layers,
-  Smartphone,
-  Laptop,
   CheckCircle2,
   Sliders,
-  ExternalLink,
   Zap,
-  ShieldCheck,
   LayoutDashboard
 } from 'lucide-vue-next'
 import { MdButton, MdCard } from '@/components/m3'
@@ -100,11 +96,6 @@ const goToAdmin = () => {
                 <stop offset="100%" stop-color="var(--md-sys-color-tertiary-container)" />
               </linearGradient>
 
-              <linearGradient id="m3GradSecondary" x1="50%" y1="0%" x2="50%" y2="100%">
-                <stop offset="0%" stop-color="var(--md-sys-color-secondary-container)" />
-                <stop offset="100%" stop-color="var(--md-sys-color-surface-container-high)" />
-              </linearGradient>
-
               <filter id="m3Glow" x="-20%" y="-20%" width="140%" height="140%">
                 <feGaussianBlur stdDeviation="24" result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
@@ -115,7 +106,7 @@ const goToAdmin = () => {
             <circle cx="360" cy="180" r="140" fill="url(#m3GradTertiary)" opacity="0.35" filter="url(#m3Glow)" />
             <circle cx="180" cy="280" r="160" fill="url(#m3GradPrimary)" opacity="0.25" filter="url(#m3Glow)" />
 
-            <!-- 几何形态 1: M3 Expressive 四叶草 / 弯曲多边花瓣 (Curved Clover) -->
+            <!-- 几何形态 1: M3 Expressive 四叶草 / 弯曲多边花瓣 -->
             <path
               d="M 270,70 
                  C 320,70 340,110 340,150 
@@ -130,7 +121,7 @@ const goToAdmin = () => {
               class="art-shape-float-1"
             />
 
-            <!-- 几何形态 2: 旋转次级平滑圆角方块 (Super-ellipse) -->
+            <!-- 几何形态 2: 旋转次级平滑圆角方块 -->
             <rect
               x="250"
               y="160"
@@ -223,13 +214,19 @@ const goToAdmin = () => {
       </div>
 
       <div class="bento-grid">
-        <!-- Bento 1: 跨 2 列大卡片 (Primary Tonal + 顶部几何封面) -->
+        <!-- Bento 1: 跨 2 列大卡片 (Primary Tonal + 清晰对比 M3 几何插画) -->
         <MdCard variant="primary-tonal" clickable class="bento-card bento-col-2">
           <div class="bento-cover-art">
             <svg class="cover-svg" viewBox="0 0 560 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="80" cy="80" r="60" fill="rgba(255,255,255,0.22)" />
-              <rect x="180" y="20" width="120" height="120" rx="36" fill="rgba(255,255,255,0.18)" transform="rotate(15 180 20)" />
-              <path d="M 360,20 Q 420,140 480,20 T 540,140" stroke="rgba(255,255,255,0.25)" stroke-width="12" stroke-linecap="round" fill="none" />
+              <!-- 清晰几何对比图形：圆形、旋转圆角方块、波浪曲线，利用 primary 15% 透明度与 surface-container-lowest 纯白底叠加 -->
+              <circle cx="90" cy="80" r="54" fill="var(--md-sys-color-surface-container-lowest)" opacity="0.9" />
+              <circle cx="90" cy="80" r="32" fill="var(--md-sys-color-primary)" opacity="0.18" />
+
+              <rect x="210" y="24" width="108" height="108" rx="32" fill="var(--md-sys-color-surface-container-lowest)" opacity="0.88" transform="rotate(15 210 24)" />
+              <rect x="224" y="38" width="80" height="80" rx="22" fill="var(--md-sys-color-primary)" opacity="0.15" transform="rotate(15 210 24)" />
+
+              <path d="M 370,30 Q 430,130 490,30 T 560,130" stroke="var(--md-sys-color-surface-container-lowest)" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.92" />
+              <path d="M 370,30 Q 430,130 490,30 T 560,130" stroke="var(--md-sys-color-primary)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.25" />
             </svg>
           </div>
           <div class="bento-inner-content">
@@ -241,9 +238,12 @@ const goToAdmin = () => {
           </div>
         </MdCard>
 
-        <!-- Bento 2: 1 列高饱和 Tertiary Tonal 撞色卡片 -->
+        <!-- Bento 2: 1 列高饱和 Tertiary Tonal 撞色卡片 (纯白微底座 + Tertiary 图标，消除发脏感) -->
         <MdCard variant="tertiary-tonal" clickable class="bento-card">
-          <div class="m3-geometric-badge" style="background-color: rgba(0, 104, 116, 0.18); color: var(--md-sys-color-tertiary);">
+          <div
+            class="m3-geometric-badge"
+            style="background-color: var(--md-sys-color-surface-container-lowest); color: var(--md-sys-color-tertiary); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);"
+          >
             <Zap :size="26" />
           </div>
           <div class="bento-inner-content">
@@ -309,14 +309,15 @@ const goToAdmin = () => {
             </div>
           </div>
 
+          <!-- 2x2 网格排布，完美消除单按钮单独掉到第二行 -->
           <div class="preview-demo-interactive">
             <div class="interactive-sample-box">
               <div class="sample-title label-medium">按钮四态微交互预览</div>
-              <div class="sample-buttons">
-                <MdButton variant="filled">Filled 按钮</MdButton>
-                <MdButton variant="tonal">Tonal 按钮</MdButton>
-                <MdButton variant="outlined">Outlined 按钮</MdButton>
-                <MdButton variant="text">Text 按钮</MdButton>
+              <div class="sample-buttons-grid">
+                <MdButton variant="filled" class="preview-btn">Filled 按钮</MdButton>
+                <MdButton variant="tonal" class="preview-btn">Tonal 按钮</MdButton>
+                <MdButton variant="outlined" class="preview-btn">Outlined 按钮</MdButton>
+                <MdButton variant="text" class="preview-btn">Text 按钮</MdButton>
               </div>
             </div>
           </div>
@@ -566,6 +567,16 @@ const goToAdmin = () => {
   gap: 20px;
 }
 
+.m3-geometric-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 /* ================= 3. Components Preview ================= */
 .components-preview-container {
   max-width: 1120px;
@@ -603,11 +614,12 @@ const goToAdmin = () => {
   flex: 1;
   display: flex;
   justify-content: center;
+  min-width: 280px;
 }
 
 .interactive-sample-box {
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
   background-color: var(--md-sys-color-surface);
   border-radius: 24px;
   padding: 24px;
@@ -615,17 +627,23 @@ const goToAdmin = () => {
   box-shadow: var(--md-sys-elevation-level1);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .sample-title {
   color: var(--md-sys-color-on-surface-variant);
 }
 
-.sample-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+/* 2x2 规整网格排布 */
+.sample-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.preview-btn {
+  width: 100%;
+  justify-content: center;
 }
 
 /* 通用辅助类 */

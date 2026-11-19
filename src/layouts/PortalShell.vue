@@ -60,7 +60,7 @@ onUnmounted(() => {
 
 <template>
   <div class="portal-shell">
-    <!-- 顶部居中悬浮半透明毛玻璃胶囊导航栏 -->
+    <!-- 顶部居中悬浮半透明毛玻璃胶囊导航栏 (完美上下左右几何对称) -->
     <header class="portal-header-wrapper" :class="{ 'is-scrolled': isScrolled }">
       <nav class="portal-pill-nav">
         <!-- 左侧 Brand Logo -->
@@ -85,7 +85,7 @@ onUnmounted(() => {
           </li>
         </ul>
 
-        <!-- 右侧操作区 -->
+        <!-- 右侧操作区 (与左侧 Logo 边距严格对称) -->
         <div class="portal-nav-actions">
           <button
             type="button"
@@ -209,7 +209,7 @@ onUnmounted(() => {
   position: relative;
 }
 
-/* ================= 顶部悬浮胶囊导航 ================= */
+/* ================= 顶部悬浮胶囊导航 (左右上下对称 + 16px 呼吸留白) ================= */
 .portal-header-wrapper {
   position: sticky;
   top: 16px;
@@ -217,6 +217,7 @@ onUnmounted(() => {
   right: 0;
   z-index: 100;
   width: 100%;
+  margin-top: 16px;
   padding: 0 20px;
   display: flex;
   justify-content: center;
@@ -226,7 +227,7 @@ onUnmounted(() => {
 .portal-pill-nav {
   width: 100%;
   max-width: 1080px;
-  height: 60px;
+  height: 64px;
   border-radius: var(--md-sys-shape-corner-full);
   background-color: rgba(254, 247, 255, 0.78);
   backdrop-filter: blur(20px);
@@ -236,7 +237,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px 0 20px;
+  padding: 0 16px;
   transition: all var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
 }
 
@@ -253,14 +254,14 @@ onUnmounted(() => {
 .portal-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
   user-select: none;
 }
 
 .portal-brand__badge {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
   color: #ffffff;
@@ -268,6 +269,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   box-shadow: var(--md-sys-elevation-level1);
+  flex-shrink: 0;
 }
 
 .portal-brand__name {
@@ -287,7 +289,7 @@ onUnmounted(() => {
 .portal-nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   list-style: none;
 }
 
@@ -310,33 +312,43 @@ onUnmounted(() => {
 }
 
 .portal-icon-btn {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--md-sys-shape-corner-full);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--md-sys-color-on-surface-variant);
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .portal-icon-btn:hover {
   color: var(--md-sys-color-on-surface);
 }
 
+.admin-entry-btn {
+  height: 40px;
+}
+
 .mobile-menu-toggle {
   display: none;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--md-sys-shape-corner-full);
   align-items: center;
   justify-content: center;
   color: var(--md-sys-color-on-surface);
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 /* 手机端下拉菜单 */
 .mobile-nav-drawer {
   position: absolute;
-  top: 72px;
+  top: 76px;
   left: 20px;
   right: 20px;
   background-color: var(--md-sys-color-surface-container-high);
@@ -490,10 +502,11 @@ onUnmounted(() => {
   .portal-header-wrapper {
     padding: 0 12px;
     top: 8px;
+    margin-top: 8px;
   }
   .portal-pill-nav {
-    height: 54px;
-    padding: 0 12px 0 16px;
+    height: 56px;
+    padding: 0 12px;
   }
   .footer-top-row {
     flex-direction: column;

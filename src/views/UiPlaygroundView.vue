@@ -8,7 +8,6 @@ import {
 } from '@/components/m3'
 import {
   Users,
-  Activity,
   ShieldCheck,
   HardDrive,
   TrendingUp,
@@ -23,12 +22,17 @@ import {
   Zap,
   Layers,
   Palette,
-  Check
+  Check,
+  Eye,
+  Info
 } from 'lucide-vue-next'
 
 const switch1 = ref(true)
 const switch2 = ref(false)
 const switch3 = ref(true)
+
+// Token 透视模式 (Inspect Mode)
+const isInspectMode = ref(false)
 
 const isModalOpen = ref(false)
 const demoInput = ref('')
@@ -42,7 +46,7 @@ const handleConfirm = () => {
   isModalOpen.value = false
 }
 
-// 4 组 M3 Expressive 撞色指标数据
+// 4 组 M3 Expressive 指标数据
 const expressiveCards = [
   {
     title: '全平台活跃用户',
@@ -51,9 +55,10 @@ const expressiveCards = [
     isPositive: true,
     icon: Users,
     variant: 'primary-tonal' as const,
-    badgeBg: 'rgba(103, 80, 164, 0.16)',
-    badgeColor: 'var(--md-sys-color-primary)',
-    caption: 'Primary Tonal 高饱和紫调容器'
+    businessCaption: '环比上周新增 +7,520 注册组织席位',
+    tokenBadge: 'primary-tonal · r: 24px',
+    isTonalColor: true,
+    tonalTheme: 'primary'
   },
   {
     title: '边缘存储吞吐量',
@@ -62,9 +67,10 @@ const expressiveCards = [
     isPositive: true,
     icon: Zap,
     variant: 'tertiary-tonal' as const,
-    badgeBg: 'rgba(0, 104, 116, 0.18)',
-    badgeColor: 'var(--md-sys-color-tertiary)',
-    caption: 'Tertiary Tonal 灵动海青绿撞色容器'
+    businessCaption: '流量峰值达到集群边缘承载能力的 82.4%',
+    tokenBadge: 'tertiary-tonal · r: 24px',
+    isTonalColor: true,
+    tonalTheme: 'tertiary'
   },
   {
     title: '系统可用性 SLI',
@@ -73,9 +79,9 @@ const expressiveCards = [
     isPositive: true,
     icon: ShieldCheck,
     variant: 'elevated' as const,
-    badgeBg: 'var(--md-sys-color-secondary-container)',
-    badgeColor: 'var(--md-sys-color-on-secondary-container)',
-    caption: 'Elevated 经典柔和浮雕分层'
+    businessCaption: '全链路服务达标，过去 30 天无不可用异常',
+    tokenBadge: 'surface-container-low · elevation-1',
+    isTonalColor: false
   },
   {
     title: '微服务调度健康',
@@ -84,30 +90,48 @@ const expressiveCards = [
     isPositive: true,
     icon: HardDrive,
     variant: 'filled' as const,
-    badgeBg: 'var(--md-sys-color-surface-container)',
-    badgeColor: 'var(--md-sys-color-primary)',
-    caption: 'Filled 高色阶明暗纯净容器'
+    businessCaption: '128 个计算节点负载均衡健康分配',
+    tokenBadge: 'surface-container-highest · r: 24px',
+    isTonalColor: false
   }
 ]
 </script>
 
 <template>
   <div class="playground-view">
-    <!-- 1. 顶部 Expressive 视觉张力大标题 -->
+    <!-- 1. 顶部 Expressive 视觉张力大标题 + Token 透视开关 -->
     <section class="hero-section">
-      <div class="hero-chip label-medium">
-        <Sparkles :size="15" />
-        <span>Material 3 Expressive 视觉体系</span>
+      <div class="hero-header-row">
+        <div class="hero-title-area">
+          <div class="hero-chip label-medium">
+            <Sparkles :size="15" />
+            <span>Material 3 Expressive 体系</span>
+          </div>
+          <h1 class="headline-large hero-title">
+            高级质感与色彩撞色演练场
+          </h1>
+          <p class="body-large hero-subtitle">
+            融合 Google Fonts <code>Plus Jakarta Sans</code> 排版张力、24px 柔润圆角、独立几何图标底座与高辨识度色彩容器撞色。
+          </p>
+        </div>
+
+        <!-- Token 透视模式开关 (Inspect Mode Toggle) -->
+        <div class="inspect-control-card">
+          <div class="inspect-control-info">
+            <div class="inspect-control-title">
+              <Eye :size="18" class="text-primary" />
+              <span class="label-large">Token 透视模式</span>
+            </div>
+            <span class="body-small text-secondary">
+              {{ isInspectMode ? '已开启：标注各组件底层 Token' : '已关闭：呈现纯净商业级页面效果' }}
+            </span>
+          </div>
+          <MdSwitch v-model="isInspectMode" />
+        </div>
       </div>
-      <h1 class="headline-large hero-title">
-        高级质感与色彩撞色演练场
-      </h1>
-      <p class="body-large hero-subtitle">
-        融合 Google Fonts <code>Plus Jakarta Sans</code> 排版张力、24px 柔润圆角、独立几何图标底座与高辨识度色彩容器撞色。
-      </p>
     </section>
 
-    <!-- 2. 官网级色彩撞色指标卡片群 (带 48px x 48px 几何底座 + 弹性悬停动效) -->
+    <!-- 2. 色彩撞色指标卡片群 (带 48px x 48px 几何底座 + 高对比纯净胶囊徽章) -->
     <section class="cards-showcase">
       <div class="section-header">
         <div class="section-tag label-medium">
@@ -125,24 +149,49 @@ const expressiveCards = [
           clickable
           class="expressive-card"
         >
+          <!-- 开启透视模式时的 Token 悬浮标签 -->
+          <Transition name="token-fade">
+            <div v-if="isInspectMode" class="token-inspect-chip label-small">
+              <Info :size="12" />
+              <span>{{ card.tokenBadge }}</span>
+            </div>
+          </Transition>
+
           <div class="card-top-row">
             <!-- 独立 48px x 48px, 16px 圆角几何图标底座 -->
             <div
               class="m3-geometric-badge"
-              :style="{ backgroundColor: card.badgeBg, color: card.badgeColor }"
+              :class="`m3-geometric-badge--${card.variant}`"
             >
               <component :is="card.icon" :size="24" />
             </div>
-            <div class="trend-badge label-medium" :class="{ 'is-positive': card.isPositive }">
-              <TrendingUp :size="15" />
-              <span>{{ card.change }}</span>
+
+            <!-- 右上角趋势徽章：彩色 Tonal 使用纯净白底/容器底 + 对应主色深字，提升通透对比度 -->
+            <div
+              v-if="card.isTonalColor"
+              :class="['tonal-trend-pill', 'label-medium', `tonal-trend-pill--${card.tonalTheme}`]"
+            >
+              <TrendingUp :size="14" />
+              <span class="tabular-nums font-bold">{{ card.change }}</span>
+            </div>
+            <div
+              v-else
+              class="standard-trend-badge label-medium"
+              :class="{ 'is-positive': card.isPositive }"
+            >
+              <TrendingUp v-if="card.isPositive" :size="14" />
+              <span class="tabular-nums">{{ card.change }}</span>
             </div>
           </div>
 
           <div class="card-main-content">
             <span class="card-title label-large">{{ card.title }}</span>
             <span class="card-value display-small tabular-nums">{{ card.value }}</span>
-            <span class="card-caption body-small">{{ card.caption }}</span>
+
+            <!-- 商业级模式显示真实业务环比，透视模式显示底层说明 -->
+            <span class="card-caption body-small">
+              {{ isInspectMode ? `容器角色: ${card.variant}` : card.businessCaption }}
+            </span>
           </div>
         </MdCard>
       </div>
@@ -160,26 +209,41 @@ const expressiveCards = [
 
       <div class="variants-grid">
         <MdCard variant="primary-tonal" clickable class="variant-preview-card">
+          <div v-if="isInspectMode" class="token-inspect-chip label-small">
+            <span>--md-sys-color-primary-container</span>
+          </div>
           <span class="title-medium">Primary Tonal</span>
-          <p class="body-small opacity-80">高饱和主色调容器，适合核心引导或重点业务看板，无边框设计。</p>
+          <p class="body-small opacity-85">高饱和主色调容器，适合核心引导或重点业务看板，无边框设计。</p>
         </MdCard>
 
         <MdCard variant="tertiary-tonal" clickable class="variant-preview-card">
+          <div v-if="isInspectMode" class="token-inspect-chip label-small">
+            <span>--md-sys-color-tertiary-container</span>
+          </div>
           <span class="title-medium">Tertiary Tonal</span>
-          <p class="body-small opacity-80">高辨识度青绿柔光撞色容器，带来活力与视觉停顿感。</p>
+          <p class="body-small opacity-85">高辨识度第三强调色容器，跟随动态 HCT 种子调和，带来活力与丰富层级。</p>
         </MdCard>
 
         <MdCard variant="elevated" clickable class="variant-preview-card">
+          <div v-if="isInspectMode" class="token-inspect-chip label-small">
+            <span>surface-container-low · elevation-1</span>
+          </div>
           <span class="title-medium">Elevated</span>
           <p class="body-small text-secondary">经典 1 级阴影与低层容器，悬停平滑提升至 2 级阴影。</p>
         </MdCard>
 
         <MdCard variant="filled" clickable class="variant-preview-card">
+          <div v-if="isInspectMode" class="token-inspect-chip label-small">
+            <span>surface-container-highest</span>
+          </div>
           <span class="title-medium">Filled</span>
           <p class="body-small text-secondary">最高容器层级，完全依托纯色块对比划分界面边界。</p>
         </MdCard>
 
         <MdCard variant="outlined" clickable class="variant-preview-card">
+          <div v-if="isInspectMode" class="token-inspect-chip label-small">
+            <span>surface + outline-variant (1px)</span>
+          </div>
           <span class="title-medium">Outlined</span>
           <p class="body-small text-secondary">优雅细描边，背景通透，适用于平铺次要选项。</p>
         </MdCard>
@@ -191,7 +255,12 @@ const expressiveCards = [
       <MdCard variant="elevated" class="demo-card">
         <template #header>
           <div class="section-title-wrap">
-            <h2 class="headline-small">M3 按钮原子组件 (带 Expressive 弹性微浮动效)</h2>
+            <div class="title-with-token">
+              <h2 class="headline-small">M3 按钮原子组件 (带 Expressive 弹性微浮动效)</h2>
+              <span v-if="isInspectMode" class="token-inspect-chip label-small">
+                shape: 9999px · state-layer: 8%/12%
+              </span>
+            </div>
             <p class="body-medium text-secondary">
               支持 Filled / Tonal / Outlined / Text，全圆角 9999px，Hover 时弹性上浮 <code>translateY(-1px)</code>，配合 Hover 8% / Active 12% 状态层透明遮罩。
             </p>
@@ -249,7 +318,12 @@ const expressiveCards = [
       <MdCard variant="elevated" class="demo-card">
         <template #header>
           <div class="section-title-wrap">
-            <h2 class="headline-small">M3 触控开关原子组件 (MdSwitch)</h2>
+            <div class="title-with-token">
+              <h2 class="headline-small">M3 触控开关原子组件 (MdSwitch)</h2>
+              <span v-if="isInspectMode" class="token-inspect-chip label-small">
+                track: 52×32px · thumb: 16px/24px
+              </span>
+            </div>
             <p class="body-medium text-secondary">
               标准 <code>52px × 32px</code> 轨道；未选中时滑块 <code>16px</code>（outline 边框与填充）；选中时轨道切换 primary，滑块平滑放大至 <code>24px</code>（on-primary 填充），内嵌可选指示图标。
             </p>
@@ -282,7 +356,12 @@ const expressiveCards = [
       <MdCard variant="outlined" class="demo-card">
         <template #header>
           <div class="section-title-wrap">
-            <h2 class="headline-small">双端自适应模态框 (AdaptiveModal)</h2>
+            <div class="title-with-token">
+              <h2 class="headline-small">双端自适应模态框 (AdaptiveModal)</h2>
+              <span v-if="isInspectMode" class="token-inspect-chip label-small">
+                Mobile: Bottom Sheet (r: 28px top) · PC: Dialog (r: 28px)
+              </span>
+            </div>
             <p class="body-medium text-secondary">
               在手机端 (&lt; 600px) 自动从底部滑出为 <b>Bottom Sheet</b>（顶部圆角 28px + 拖拽手柄）；在 PC 端 (&gt;= 600px) 自动呈现为屏幕居中的 <b>Dialog</b>（全圆角 28px）。
             </p>
@@ -377,6 +456,19 @@ const expressiveCards = [
   padding: 8px 0 4px 0;
 }
 
+.hero-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-title-area {
+  flex: 1;
+  min-width: 280px;
+}
+
 .hero-chip {
   display: inline-flex;
   align-items: center;
@@ -406,6 +498,76 @@ const expressiveCards = [
   background-color: var(--md-sys-color-surface-container);
   color: var(--md-sys-color-primary);
   font-family: monospace;
+}
+
+/* Token 透视控制卡片 */
+.inspect-control-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 18px;
+  border-radius: var(--md-sys-shape-corner-large);
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  box-shadow: var(--md-sys-elevation-level1);
+}
+
+.inspect-control-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.inspect-control-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--md-sys-color-on-surface);
+}
+
+/* Token 透视微徽章 */
+.token-inspect-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background-color: rgba(0, 0, 0, 0.72);
+  color: #ffffff;
+  font-family: monospace;
+  font-size: 11px;
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .token-inspect-chip {
+  background-color: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.title-with-token {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.title-with-token .token-inspect-chip {
+  position: static;
+}
+
+.token-fade-enter-active,
+.token-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.token-fade-enter-from,
+.token-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
 }
 
 /* 模块公共 Header */
@@ -444,10 +606,11 @@ const expressiveCards = [
 }
 
 .expressive-card {
-  min-height: 180px;
+  min-height: 190px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
 .card-top-row {
@@ -457,25 +620,73 @@ const expressiveCards = [
   margin-bottom: 20px;
 }
 
-.trend-badge {
+/* 几何图标底座 */
+.m3-geometric-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--md-sys-shape-corner-medium, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.m3-geometric-badge--primary-tonal {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+.m3-geometric-badge--tertiary-tonal {
+  background-color: var(--md-sys-color-tertiary);
+  color: var(--md-sys-color-on-tertiary);
+}
+
+.m3-geometric-badge--elevated {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+.m3-geometric-badge--filled {
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-primary);
+}
+
+/* 高通透纯净白底趋势微胶囊 (针对 Primary/Tertiary Tonal) */
+.tonal-trend-pill {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
   border-radius: var(--md-sys-shape-corner-full);
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: var(--md-sys-color-surface-container-lowest);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-[data-theme="dark"] .trend-badge {
-  background-color: rgba(255, 255, 255, 0.08);
+.tonal-trend-pill--primary {
+  color: var(--md-sys-color-primary);
 }
 
-.trend-badge.is-positive {
+.tonal-trend-pill--tertiary {
+  color: var(--md-sys-color-tertiary);
+}
+
+/* 标准普通徽章 */
+.standard-trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.standard-trend-badge.is-positive {
   color: #1b873f;
   background-color: rgba(27, 135, 63, 0.12);
 }
 
-[data-theme="dark"] .trend-badge.is-positive {
+[data-theme="dark"] .standard-trend-badge.is-positive {
   color: #4ade80;
   background-color: rgba(74, 222, 128, 0.15);
 }
@@ -487,7 +698,7 @@ const expressiveCards = [
 }
 
 .card-title {
-  opacity: 0.85;
+  opacity: 0.88;
 }
 
 .card-value {
@@ -497,7 +708,8 @@ const expressiveCards = [
 }
 
 .card-caption {
-  opacity: 0.75;
+  opacity: 0.78;
+  line-height: 1.4;
 }
 
 /* 五态卡片对比网格 */
@@ -520,15 +732,16 @@ const expressiveCards = [
 }
 
 .variant-preview-card {
-  min-height: 140px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 8px;
+  position: relative;
 }
 
-.opacity-80 {
-  opacity: 0.85;
+.opacity-85 {
+  opacity: 0.88;
   line-height: 1.5;
 }
 

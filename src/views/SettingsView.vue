@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { MdCard, MdButton } from '@/components/m3'
+import { MdCard } from '@/components/m3'
 import { useThemeStore } from '@/stores/theme'
-import { Sun, Moon, Palette, Monitor, Shield, Smartphone } from 'lucide-vue-next'
+import { Sun, Moon, Palette, Monitor } from 'lucide-vue-next'
 
 const themeStore = useThemeStore()
 </script>
@@ -47,20 +47,25 @@ const themeStore = useThemeStore()
           </div>
         </div>
 
-        <!-- 种子色切换区 (HCT 动态色板) -->
+        <!-- 种子色切换区 (HCT 动态色板，含银行与金融专属) -->
         <div class="seed-colors-section">
-          <span class="label-large seed-title">HCT 动态种子色切换 (Tone 90 容器平衡)</span>
+          <div class="seed-title-row">
+            <span class="label-large seed-title">HCT 动态种子色切换 (Tone 90 容器平衡规范)</span>
+            <span class="body-small text-secondary">单一数据源 · 覆盖通用商务与银行金融专属场景</span>
+          </div>
           <div class="seed-colors-grid">
             <button
-              v-for="preset in themeStore.seedPresets"
-              :key="preset.key"
+              v-for="preset in themeStore.THEME_PRESETS"
+              :key="preset.id"
               type="button"
               class="seed-color-pill md-state-layer"
-              :class="{ 'is-active': themeStore.seedColor === preset.hex }"
+              :class="{ 'is-active': themeStore.seedColor.toLowerCase() === preset.hex.toLowerCase() }"
+              :title="`${preset.name} (${preset.hex}) - ${preset.description}`"
               @click="themeStore.setSeedColor(preset.hex)"
             >
               <span class="seed-swatch" :style="{ backgroundColor: preset.hex }"></span>
               <span class="label-large">{{ preset.name }}</span>
+              <span class="seed-category-tag label-small">{{ preset.category }}</span>
             </button>
           </div>
         </div>
@@ -196,6 +201,30 @@ const themeStore = useThemeStore()
   border-top: 1px solid var(--md-sys-color-outline-variant);
 }
 
+.seed-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.seed-category-tag {
+  padding: 1px 6px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 11px;
+  line-height: 16px;
+  transition: all 0.2s ease;
+}
+
+.seed-color-pill.is-active .seed-category-tag {
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-primary);
+  font-weight: 600;
+}
+
 .context-density-section {
   display: flex;
   flex-direction: column;
@@ -231,13 +260,21 @@ const themeStore = useThemeStore()
   background-color: var(--md-sys-color-surface-container);
   color: var(--md-sys-color-on-surface);
   border: 1px solid var(--md-sys-color-outline-variant);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
   transition: all 0.2s ease;
+}
+
+.seed-color-pill:hover {
+  background-color: var(--md-sys-color-surface-container-high);
 }
 
 .seed-color-pill.is-active {
   background-color: var(--md-sys-color-primary-container);
   color: var(--md-sys-color-on-primary-container);
   border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 1px var(--md-sys-color-primary);
   font-weight: 600;
 }
 
@@ -245,8 +282,14 @@ const themeStore = useThemeStore()
   width: 18px;
   height: 18px;
   border-radius: var(--md-sys-shape-corner-full);
-  border: 2px solid #ffffff;
+  border: 2px solid var(--md-sys-color-surface);
   box-shadow: 0 0 0 1px var(--md-sys-color-outline-variant);
+  flex-shrink: 0;
+  transition: box-shadow 0.2s ease;
+}
+
+.seed-color-pill.is-active .seed-swatch {
+  box-shadow: 0 0 0 2px var(--md-sys-color-primary);
 }
 
 .theme-box {

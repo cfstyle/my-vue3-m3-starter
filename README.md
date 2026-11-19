@@ -19,8 +19,14 @@
 
 ```
 my-vue3-m3-starter/
-├── .agent/rules/
-│   └── vue3-m3-stack.md       # 项目级 AI 开发铁律（限制组件规范、颜色 Token、路由继承）
+├── .agent/
+│   ├── rules/
+│   │   ├── vue3-m3-stack.md           # M3 视觉设计与组件架构铁律（颜色 Token、双轨外壳、禁止硬编码）
+│   │   └── modern-web-reliability.md  # 现代 Web 零缺陷工程准则（异步防竞态、防泄漏、边界校验、TS门禁）
+│   └── workflows/
+│       ├── new-project.md             # 新项目初始化向导工作流（/new-project）
+│       └── refactor-legacy.md         # 存量旧项目重构迁移工作流（/refactor-legacy）
+├── AGENTS.md                          # OpenAI Codex / 通用 AI 编程助手规范与工作流入口
 ├── src/
 │   ├── components/
 │   │   └── m3/                # M3 原子基础组件库
@@ -82,6 +88,24 @@ my-vue3-m3-starter/
 项目内置了完整的 M3 组件演练与交互参考页：
 - 访问路径：`http://localhost:5173/playground`
 - 包含 `MdButton` 四态、`MdCard` 三种色调分层形态、`AdaptiveModal` 双端自动转换测试用例。
+
+---
+
+## 🤖 AI 协同开发与快捷工作流
+
+本仓库深度适配 **Google Antigravity** 与 **OpenAI Codex** 等主流 AI 编程助手，实现多工具无缝兼容与标准化开发：
+
+- **多 AI 平台兼容入口**：
+  - **Antigravity 原生支持**：自动读取 `.agent/rules/` 下的设计与工程守则，并支持直接在对话框输入 `/new-project` 或 `/refactor-legacy` 呼出工作流。
+  - **OpenAI Codex / 通用 Agent 支持**：根目录配备 [`AGENTS.md`](AGENTS.md)，作为 Codex 的规则与工作流总入口。在 Codex 环境下直接输入“执行 new-project”或“执行 refactor-legacy”即可调用同等标准化流程。
+- **事前规则约束（打开即自动生效）**：
+  - `.agent/rules/vue3-m3-stack.md` & `.agent/rules/m3-design-system.md`：强制全量 Vue 3 `<script setup lang="ts">`、Lucide 图标、M3 语义 Token、禁用硬编码颜色与未授权重型 UI 库。
+  - `.agent/rules/modern-web-reliability.md`：参照 Google 现代 Web 高可靠性工程准则，强制并发竞态拦截（`AbortController`）、监听器成对销毁防内存泄漏、不可信数据防御性校验与纯净响应式状态。
+- **快捷交互工作流（Slash Commands / Codex 指令）**：
+  - `/new-project` / `执行 new-project`：呼出**新项目初始化向导**，引导确认项目名称、6 套金融/通用 HCT 种子色锁定、布局形态（后台/官网/双轨）及首批核心业务页面搭建。
+  - `/refactor-legacy` / `执行 refactor-legacy`：呼出**存量旧项目重构流程**，支持 Element Plus / Ant Design Vue 样式变量桥接、分阶段类型清洗、外壳接管与 M3 组件渐进重构。
+- **交付门禁自检**：
+  - 交付前统一运行 `npm run check`（`vue-tsc --noEmit && eslint src`），实现零 TS 报错与零逻辑隐患闭环。
 
 ---
 

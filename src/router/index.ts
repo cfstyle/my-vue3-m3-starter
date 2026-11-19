@@ -56,4 +56,16 @@ const router = createRouter({
   ]
 })
 
+// Web 安全防范：协议合法性校验，拦截恶意伪协议重定向
+router.beforeEach((to, _from, next) => {
+  if (to.query.redirect) {
+    const redirectUrl = String(to.query.redirect)
+    if (/^\s*(javascript|data|vbscript):/i.test(redirectUrl)) {
+      next({ path: '/' })
+      return
+    }
+  }
+  next()
+})
+
 export default router
