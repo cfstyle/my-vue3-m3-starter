@@ -25,25 +25,37 @@ my-vue3-m3-starter/
 │   ├── components/
 │   │   └── m3/                # M3 原子基础组件库
 │   │       ├── MdButton.vue      # 按钮（filled / tonal / outlined / text，全圆角 9999px）
-│   │       ├── MdCard.vue        # 卡片（elevated / filled / outlined）
+│   │       ├── MdCard.vue        # 卡片（elevated / filled / outlined / primary-tonal / tertiary-tonal）
 │   │       ├── AdaptiveModal.vue # 响应式弹窗（手机端 Bottom Sheet / PC 居中 Dialog）
 │   │       └── index.ts          # 统一导出
 │   ├── layouts/
-│   │   └── AdaptiveShell.vue  # 双端自适应外壳（抽屉 Drawer / 窄轨 Rail / 底部栏 Bar）
+│   │   ├── AdaptiveShell.vue  # 双端自适应外壳（抽屉 Drawer / 窄轨 Rail / 底部栏 Bar）
+│   │   └── PortalShell.vue    # 官网级展示外壳（顶部居中悬浮毛玻璃胶囊导航 + 精致页脚）
 │   ├── stores/
 │   │   └── theme.ts           # Pinia 主题管理 Store（支持深/浅色模式切换与持久化）
 │   ├── styles/
 │   │   ├── m3-tokens.css      # M3 标准语义化 Design Tokens（Surface 分层、颜色、圆角、状态层）
 │   │   └── main.css           # 全局样式重置与排版规范
 │   ├── views/
-│   │   ├── HomeView.vue          # 纯净业务起步页（开箱即用）
+│   │   ├── HomeView.vue          # 纯净业务起步页（后台管理默认主页）
 │   │   ├── UiPlaygroundView.vue  # M3 组件与动效参考演练场（/playground）
+│   │   ├── portal/
+│   │   │   └── PortalShowcaseView.vue # M3 官网级视觉示范页（/portal，Hero + Bento Grid）
 │   │   ├── AnalyticsView.vue     # 示例数据分析页
 │   │   ├── MessagesView.vue      # 示例消息中心页
 │   │   └── SettingsView.vue      # 示例偏好与系统设置页
 │   ├── App.vue
 │   └── main.ts
 ```
+
+---
+
+## 🌐 双轨共存通用架构 (Admin + Portal)
+
+本工程支持一套底层 Token 与组件库驱动两种主流产品形态：
+1. **后台管理工作台模式 (`AdaptiveShell`)**：默认根路径 `/`，提供桌面抽屉、平板导航轨、移动端底栏的完整工作台框架。在左侧边栏底部附带一键切换至官网页面的入口。
+2. **官网级展示模式 (`PortalShell`)**：访问路径 `/portal`，提供居中悬浮毛玻璃胶囊导航栏（100% 宽度视野）、36px 超大圆角 Hero Banner、非对称 Bento Grid 与现代 M3 页脚。右侧内置快速回到后台的动作按钮。
+3. **开新项目建议**：可根据产品属性直接删除其中一个外壳作为单一纯净项目，亦可保持双轨混合使用。
 
 ---
 

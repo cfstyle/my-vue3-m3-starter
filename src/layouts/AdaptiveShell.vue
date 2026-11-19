@@ -10,7 +10,9 @@ import {
   Moon,
   Search,
   Sparkles,
-  Command
+  Command,
+  Globe,
+  ArrowUpRight
 } from 'lucide-vue-next'
 import { useThemeStore } from '@/stores/theme'
 
@@ -68,6 +70,14 @@ const isActive = (path: string) => {
         <button
           type="button"
           class="m3-icon-button md-state-layer"
+          title="切换至官网展示模式 (/portal)"
+          @click="router.push('/portal')"
+        >
+          <Globe :size="20" />
+        </button>
+        <button
+          type="button"
+          class="m3-icon-button md-state-layer"
           :title="themeStore.isDark ? '切换浅色模式' : '切换深色模式'"
           @click="themeStore.toggleTheme"
         >
@@ -104,6 +114,14 @@ const isActive = (path: string) => {
       </nav>
 
       <div class="m3-nav-rail__footer">
+        <button
+          type="button"
+          class="m3-icon-button md-state-layer"
+          title="切换至官网展示模式 (/portal)"
+          @click="router.push('/portal')"
+        >
+          <Globe :size="20" />
+        </button>
         <button
           type="button"
           class="m3-icon-button md-state-layer"
@@ -147,6 +165,21 @@ const isActive = (path: string) => {
       </nav>
 
       <div class="m3-drawer__footer">
+        <button
+          type="button"
+          class="m3-portal-switch-card md-state-layer"
+          @click="router.push('/portal')"
+        >
+          <div class="m3-portal-switch-icon">
+            <Globe :size="18" />
+          </div>
+          <div class="m3-portal-switch-text">
+            <span class="label-large">官网展示模式</span>
+            <span class="body-small text-secondary">切换至 C 端展示页</span>
+          </div>
+          <ArrowUpRight :size="16" class="m3-portal-switch-arrow" />
+        </button>
+
         <div class="m3-drawer__theme-switch" @click="themeStore.toggleTheme">
           <div class="m3-drawer__theme-info">
             <component :is="themeStore.isDark ? Moon : Sun" :size="20" />
@@ -447,6 +480,52 @@ const isActive = (path: string) => {
 .m3-drawer__footer {
   padding-top: 16px;
   border-top: 1px solid var(--md-sys-color-outline-variant);
+  display: flex;
+  flex-direction: column;
+}
+
+.m3-portal-switch-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--md-sys-shape-corner-medium, 16px);
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  margin-bottom: 12px;
+  text-align: left;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease;
+}
+
+.m3-portal-switch-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--md-sys-elevation-level1);
+}
+
+.m3-portal-switch-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--md-sys-shape-corner-small, 8px);
+  background-color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .m3-portal-switch-icon {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.m3-portal-switch-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.m3-portal-switch-arrow {
+  opacity: 0.7;
 }
 
 .m3-drawer__theme-switch {
