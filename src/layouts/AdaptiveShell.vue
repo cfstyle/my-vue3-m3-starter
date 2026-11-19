@@ -15,6 +15,7 @@ import {
   ArrowUpRight
 } from 'lucide-vue-next'
 import { useThemeStore } from '@/stores/theme'
+import { MdSwitch } from '@/components/m3'
 
 interface NavItem {
   name: string
@@ -189,14 +190,7 @@ onMounted(() => {
             <component :is="themeStore.isDark ? Moon : Sun" :size="20" />
             <span class="label-large">{{ themeStore.isDark ? '深色模式' : '浅色模式' }}</span>
           </div>
-          <button
-            type="button"
-            class="m3-switch-toggle"
-            :class="{ 'is-active': themeStore.isDark }"
-            aria-label="模式切换"
-          >
-            <div class="m3-switch-thumb"></div>
-          </button>
+          <MdSwitch :model-value="themeStore.isDark" />
         </div>
       </div>
     </aside>

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import {
   MdButton,
   MdCard,
+  MdSwitch,
   AdaptiveModal
 } from '@/components/m3'
 import {
@@ -21,8 +22,13 @@ import {
   Sparkles,
   Zap,
   Layers,
-  Palette
+  Palette,
+  Check
 } from 'lucide-vue-next'
+
+const switch1 = ref(true)
+const switch2 = ref(false)
+const switch3 = ref(true)
 
 const isModalOpen = ref(false)
 const demoInput = ref('')
@@ -238,7 +244,40 @@ const expressiveCards = [
       </MdCard>
     </section>
 
-    <!-- 5. 双端自适应弹窗交互演示区 -->
+    <!-- 5. M3 Switch 触控开关原子组件 -->
+    <section class="demo-section">
+      <MdCard variant="elevated" class="demo-card">
+        <template #header>
+          <div class="section-title-wrap">
+            <h2 class="headline-small">M3 触控开关原子组件 (MdSwitch)</h2>
+            <p class="body-medium text-secondary">
+              标准 <code>52px × 32px</code> 轨道；未选中时滑块 <code>16px</code>（outline 边框与填充）；选中时轨道切换 primary，滑块平滑放大至 <code>24px</code>（on-primary 填充），内嵌可选指示图标。
+            </p>
+          </div>
+        </template>
+
+        <div class="button-row__items" style="gap: 28px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <MdSwitch v-model="switch1" />
+            <span class="label-large">基础开关：{{ switch1 ? '开启' : '关闭' }}</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <MdSwitch v-model="switch2">
+              <template #checkedIcon><Check /></template>
+            </MdSwitch>
+            <span class="label-large">带勾号图标：{{ switch2 ? '已勾选' : '未勾选' }}</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <MdSwitch v-model="switch3" disabled />
+            <span class="label-large text-secondary">禁用状态 (Disabled)</span>
+          </div>
+        </div>
+      </MdCard>
+    </section>
+
+    <!-- 6. 双端自适应弹窗交互演示区 -->
     <section class="demo-section">
       <MdCard variant="outlined" class="demo-card">
         <template #header>

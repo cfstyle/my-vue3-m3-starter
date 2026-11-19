@@ -23,7 +23,7 @@ defineEmits<{
   <button
     :type="type"
     :disabled="disabled"
-    :class="['m3-button', `m3-button--${variant}`, 'md-state-layer', { 'is-disabled': disabled }]"
+    :class="['m3-button', `m3-button--${variant}`, { 'is-disabled': disabled }]"
     @click="$emit('click', $event)"
   >
     <span v-if="$slots.icon" class="m3-button__icon">
@@ -46,19 +46,47 @@ defineEmits<{
   gap: 8px;
   position: relative;
   box-sizing: border-box;
-  border-radius: var(--md-sys-shape-corner-full, 9999px);
+  border-radius: var(--md-radius-button, 9999px);
   user-select: none;
   white-space: nowrap;
   vertical-align: middle;
   text-decoration: none;
-  transition: transform 0.2s cubic-bezier(0.2, 0.0, 0, 1.0),
-              box-shadow 0.2s cubic-bezier(0.2, 0.0, 0, 1.0),
-              background-color var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+  transition: transform 0.2s var(--md-easing-emphasized),
+              box-shadow 0.2s var(--md-easing-emphasized),
+              border-color 0.2s var(--md-easing-emphasized),
+              background-color var(--md-sys-motion-duration-short4) var(--md-easing-emphasized);
   border: 1px solid transparent;
+  overflow: hidden;
+  isolation: isolate;
 
   /* PC 端紧凑高度 36px */
   height: 36px;
   padding: 0 16px;
+}
+
+/* ================= M3 State Layer (状态层) ================= */
+.m3-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--md-sys-motion-duration-short2) var(--md-easing-emphasized);
+  z-index: 1;
+}
+
+.m3-button:hover:not(.is-disabled)::after {
+  opacity: 0.08;
+}
+
+.m3-button:focus-visible:not(.is-disabled)::after {
+  opacity: 0.12;
+}
+
+.m3-button:active:not(.is-disabled)::after {
+  opacity: 0.12;
 }
 
 .m3-button:hover:not(.is-disabled) {
@@ -84,6 +112,8 @@ defineEmits<{
   justify-content: center;
   width: 18px;
   height: 18px;
+  position: relative;
+  z-index: 2;
 }
 
 .m3-button__icon :deep(svg),
@@ -95,7 +125,9 @@ defineEmits<{
 .m3-button__label {
   display: inline-flex;
   align-items: center;
-  font-weight: 500;
+  font-weight: 600;
+  position: relative;
+  z-index: 2;
 }
 
 /* ================= Variants ================= */
@@ -104,20 +136,20 @@ defineEmits<{
 .m3-button--filled {
   background-color: var(--md-sys-color-primary);
   color: var(--md-sys-color-on-primary);
-  box-shadow: var(--md-sys-elevation-level0);
+  box-shadow: none;
 }
 .m3-button--filled:hover:not(.is-disabled) {
-  box-shadow: var(--md-sys-elevation-level1);
+  box-shadow: var(--md-elevation-1);
 }
 
 /* Tonal Button */
 .m3-button--tonal {
   background-color: var(--md-sys-color-secondary-container);
   color: var(--md-sys-color-on-secondary-container);
-  box-shadow: var(--md-sys-elevation-level0);
+  box-shadow: none;
 }
 .m3-button--tonal:hover:not(.is-disabled) {
-  box-shadow: var(--md-sys-elevation-level1);
+  box-shadow: var(--md-elevation-1);
 }
 
 /* Outlined Button */
