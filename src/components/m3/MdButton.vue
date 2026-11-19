@@ -51,12 +51,22 @@ defineEmits<{
   white-space: nowrap;
   vertical-align: middle;
   text-decoration: none;
-  transition: all var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+  transition: transform 0.2s cubic-bezier(0.2, 0.0, 0, 1.0),
+              box-shadow 0.2s cubic-bezier(0.2, 0.0, 0, 1.0),
+              background-color var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
   border: 1px solid transparent;
 
   /* PC 端紧凑高度 36px */
   height: 36px;
   padding: 0 16px;
+}
+
+.m3-button:hover:not(.is-disabled) {
+  transform: translateY(-1px);
+}
+
+.m3-button:active:not(.is-disabled) {
+  transform: translateY(0);
 }
 
 /* 移动端高度 40px */

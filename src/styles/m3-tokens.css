@@ -21,11 +21,11 @@
   --md-sys-color-secondary-container: #e8def8;
   --md-sys-color-on-secondary-container: #1d192b;
 
-  /* Tertiary */
-  --md-sys-color-tertiary: #7d5260;
+  /* Tertiary (Expressive M3 现代灵动海青绿) */
+  --md-sys-color-tertiary: #006874;
   --md-sys-color-on-tertiary: #ffffff;
-  --md-sys-color-tertiary-container: #ffd8e4;
-  --md-sys-color-on-tertiary-container: #31111d;
+  --md-sys-color-tertiary-container: #cef5f2;
+  --md-sys-color-on-tertiary-container: #002023;
 
   /* Error */
   --md-sys-color-error: #b3261e;
@@ -65,8 +65,8 @@
   --md-sys-shape-corner-none: 0px;
   --md-sys-shape-corner-extra-small: 4px;
   --md-sys-shape-corner-small: 8px;
-  --md-sys-shape-corner-medium: 12px;
-  --md-sys-shape-corner-large: 16px;
+  --md-sys-shape-corner-medium: 16px;
+  --md-sys-shape-corner-large: 24px;
   --md-sys-shape-corner-extra-large: 28px;
   --md-sys-shape-corner-full: 9999px;
 
@@ -123,11 +123,11 @@
   --md-sys-color-secondary-container: #4a4458;
   --md-sys-color-on-secondary-container: #e8def8;
 
-  /* Tertiary */
-  --md-sys-color-tertiary: #efb8c8;
-  --md-sys-color-on-tertiary: #492532;
-  --md-sys-color-tertiary-container: #633b48;
-  --md-sys-color-on-tertiary-container: #ffd8e4;
+  /* Tertiary (Expressive M3 清透青绿柔光) */
+  --md-sys-color-tertiary: #4ddad7;
+  --md-sys-color-on-tertiary: #00373a;
+  --md-sys-color-tertiary-container: #004f55;
+  --md-sys-color-on-tertiary-container: #cef5f2;
 
   /* Error */
   --md-sys-color-error: #f2b8b5;

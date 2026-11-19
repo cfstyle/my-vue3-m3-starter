@@ -18,7 +18,10 @@ import {
   Laptop,
   Smartphone,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Zap,
+  Layers,
+  Palette
 } from 'lucide-vue-next'
 
 const isModalOpen = ref(false)
@@ -33,96 +36,158 @@ const handleConfirm = () => {
   isModalOpen.value = false
 }
 
-// 4 组响应式指标数据
-const stats = [
+// 4 组 M3 Expressive 撞色指标数据
+const expressiveCards = [
   {
     title: '全平台活跃用户',
     value: '48,290',
     change: '+18.4%',
     isPositive: true,
     icon: Users,
-    variant: 'elevated' as const,
-    containerClass: 'surface-container-low'
+    variant: 'primary-tonal' as const,
+    badgeBg: 'rgba(103, 80, 164, 0.16)',
+    badgeColor: 'var(--md-sys-color-primary)',
+    caption: 'Primary Tonal 高饱和紫调容器'
   },
   {
-    title: '今日 API 吞吐量',
-    value: '1.24M',
-    change: '+9.2%',
+    title: '边缘存储吞吐量',
+    value: '1.24 GB/s',
+    change: '+32.6%',
     isPositive: true,
-    icon: Activity,
-    variant: 'filled' as const,
-    containerClass: 'surface-container'
+    icon: Zap,
+    variant: 'tertiary-tonal' as const,
+    badgeBg: 'rgba(0, 104, 116, 0.18)',
+    badgeColor: 'var(--md-sys-color-tertiary)',
+    caption: 'Tertiary Tonal 灵动海青绿撞色容器'
   },
   {
     title: '系统可用性 SLI',
     value: '99.99%',
-    change: '稳定',
+    change: '稳定运行',
     isPositive: true,
     icon: ShieldCheck,
-    variant: 'outlined' as const,
-    containerClass: 'surface'
+    variant: 'elevated' as const,
+    badgeBg: 'var(--md-sys-color-secondary-container)',
+    badgeColor: 'var(--md-sys-color-on-secondary-container)',
+    caption: 'Elevated 经典柔和浮雕分层'
   },
   {
-    title: '边缘存储利用率',
-    value: '38.6%',
-    change: '-2.1%',
-    isPositive: false,
+    title: '微服务调度健康',
+    value: '98.2%',
+    change: '+4.1%',
+    isPositive: true,
     icon: HardDrive,
-    variant: 'elevated' as const,
-    containerClass: 'surface-container-high'
+    variant: 'filled' as const,
+    badgeBg: 'var(--md-sys-color-surface-container)',
+    badgeColor: 'var(--md-sys-color-primary)',
+    caption: 'Filled 高色阶明暗纯净容器'
   }
 ]
 </script>
 
 <template>
   <div class="playground-view">
-    <!-- 顶部标题区 -->
-    <section class="welcome-section">
-      <div class="welcome-header">
-        <div class="welcome-chip label-medium">
-          <Sparkles :size="14" />
-          <span>开发参考演练场 (Playground)</span>
+    <!-- 1. 顶部 Expressive 视觉张力大标题 -->
+    <section class="hero-section">
+      <div class="hero-chip label-medium">
+        <Sparkles :size="15" />
+        <span>Material 3 Expressive 视觉体系</span>
+      </div>
+      <h1 class="headline-large hero-title">
+        高级质感与色彩撞色演练场
+      </h1>
+      <p class="body-large hero-subtitle">
+        融合 Google Fonts <code>Plus Jakarta Sans</code> 排版张力、24px 柔润圆角、独立几何图标底座与高辨识度色彩容器撞色。
+      </p>
+    </section>
+
+    <!-- 2. 官网级色彩撞色指标卡片群 (带 48px x 48px 几何底座 + 弹性悬停动效) -->
+    <section class="cards-showcase">
+      <div class="section-header">
+        <div class="section-tag label-medium">
+          <Palette :size="14" />
+          <span>色彩容器撞色与几何底座 (Color-Block & Geometry)</span>
         </div>
-        <h1 class="headline-large welcome-title">Material Design 3 组件规范展示</h1>
-        <p class="body-large welcome-subtitle">
-          在此测试和参考 M3 原子组件 (`MdButton`、`MdCard`、`AdaptiveModal`) 以及 Design Tokens 配色规范。
-        </p>
+        <h2 class="headline-medium">高级色彩层级与微交互</h2>
+      </div>
+
+      <div class="expressive-grid">
+        <MdCard
+          v-for="(card, index) in expressiveCards"
+          :key="index"
+          :variant="card.variant"
+          clickable
+          class="expressive-card"
+        >
+          <div class="card-top-row">
+            <!-- 独立 48px x 48px, 16px 圆角几何图标底座 -->
+            <div
+              class="m3-geometric-badge"
+              :style="{ backgroundColor: card.badgeBg, color: card.badgeColor }"
+            >
+              <component :is="card.icon" :size="24" />
+            </div>
+            <div class="trend-badge label-medium" :class="{ 'is-positive': card.isPositive }">
+              <TrendingUp :size="15" />
+              <span>{{ card.change }}</span>
+            </div>
+          </div>
+
+          <div class="card-main-content">
+            <span class="card-title label-large">{{ card.title }}</span>
+            <span class="card-value display-small">{{ card.value }}</span>
+            <span class="card-caption body-small">{{ card.caption }}</span>
+          </div>
+        </MdCard>
       </div>
     </section>
 
-    <!-- 1. 4 列响应式数据指标卡片 (M3 色调分层) -->
-    <section class="stats-grid">
-      <MdCard
-        v-for="(item, index) in stats"
-        :key="index"
-        :variant="item.variant"
-        class="stat-card"
-        :class="item.containerClass"
-      >
-        <div class="stat-card__header">
-          <span class="stat-card__title label-large">{{ item.title }}</span>
-          <div class="stat-card__icon-badge">
-            <component :is="item.icon" :size="20" />
-          </div>
+    <!-- 3. 五态卡片形态对比专区 -->
+    <section class="demo-section">
+      <div class="section-header">
+        <div class="section-tag label-medium">
+          <Layers :size="14" />
+          <span>卡片形态对比 (MdCard Variants)</span>
         </div>
-        <div class="stat-card__body">
-          <span class="stat-card__value display-small">{{ item.value }}</span>
-          <div class="stat-card__trend label-medium" :class="{ 'is-positive': item.isPositive }">
-            <TrendingUp :size="16" />
-            <span>{{ item.change }} 较昨日</span>
-          </div>
-        </div>
-      </MdCard>
+        <h2 class="headline-medium">五种 M3 标准与高饱和色块卡片</h2>
+      </div>
+
+      <div class="variants-grid">
+        <MdCard variant="primary-tonal" clickable class="variant-preview-card">
+          <span class="title-medium">Primary Tonal</span>
+          <p class="body-small opacity-80">高饱和主色调容器，适合核心引导或重点业务看板，无边框设计。</p>
+        </MdCard>
+
+        <MdCard variant="tertiary-tonal" clickable class="variant-preview-card">
+          <span class="title-medium">Tertiary Tonal</span>
+          <p class="body-small opacity-80">高辨识度青绿柔光撞色容器，带来活力与视觉停顿感。</p>
+        </MdCard>
+
+        <MdCard variant="elevated" clickable class="variant-preview-card">
+          <span class="title-medium">Elevated</span>
+          <p class="body-small text-secondary">经典 1 级阴影与低层容器，悬停平滑提升至 2 级阴影。</p>
+        </MdCard>
+
+        <MdCard variant="filled" clickable class="variant-preview-card">
+          <span class="title-medium">Filled</span>
+          <p class="body-small text-secondary">最高容器层级，完全依托纯色块对比划分界面边界。</p>
+        </MdCard>
+
+        <MdCard variant="outlined" clickable class="variant-preview-card">
+          <span class="title-medium">Outlined</span>
+          <p class="body-small text-secondary">优雅细描边，背景通透，适用于平铺次要选项。</p>
+        </MdCard>
+      </div>
     </section>
 
-    <!-- 2. M3 基础按钮变体展示区 -->
+    <!-- 4. 按钮变体与微交互展示区 -->
     <section class="demo-section">
       <MdCard variant="elevated" class="demo-card">
         <template #header>
           <div class="section-title-wrap">
-            <h2 class="title-large">M3 按钮原子组件 (MdButton)</h2>
+            <h2 class="headline-small">M3 按钮原子组件 (带 Expressive 弹性微浮动效)</h2>
             <p class="body-medium text-secondary">
-              支持 Filled / Tonal / Outlined / Text 四种形态，全圆角 9999px，集成 Hover 8% / Active 12% 状态层透明遮罩
+              支持 Filled / Tonal / Outlined / Text，全圆角 9999px，Hover 时弹性上浮 <code>translateY(-1px)</code>，配合 Hover 8% / Active 12% 状态层透明遮罩。
             </p>
           </div>
         </template>
@@ -131,18 +196,10 @@ const stats = [
           <div class="button-row">
             <div class="button-row__title label-medium">基础四态</div>
             <div class="button-row__items">
-              <MdButton variant="filled">
-                Filled 填充按钮
-              </MdButton>
-              <MdButton variant="tonal">
-                Tonal 色调按钮
-              </MdButton>
-              <MdButton variant="outlined">
-                Outlined 描边按钮
-              </MdButton>
-              <MdButton variant="text">
-                Text 文本按钮
-              </MdButton>
+              <MdButton variant="filled">Filled 填充按钮</MdButton>
+              <MdButton variant="tonal">Tonal 色调按钮</MdButton>
+              <MdButton variant="outlined">Outlined 描边按钮</MdButton>
+              <MdButton variant="text">Text 文本按钮</MdButton>
             </div>
           </div>
 
@@ -181,12 +238,12 @@ const stats = [
       </MdCard>
     </section>
 
-    <!-- 3. 双端自适应弹窗交互演示区 -->
+    <!-- 5. 双端自适应弹窗交互演示区 -->
     <section class="demo-section">
       <MdCard variant="outlined" class="demo-card">
         <template #header>
           <div class="section-title-wrap">
-            <h2 class="title-large">双端自适应模态框 (AdaptiveModal)</h2>
+            <h2 class="headline-small">双端自适应模态框 (AdaptiveModal)</h2>
             <p class="body-medium text-secondary">
               在手机端 (&lt; 600px) 自动从底部滑出为 <b>Bottom Sheet</b>（顶部圆角 28px + 拖拽手柄）；在 PC 端 (&gt;= 600px) 自动呈现为屏幕居中的 <b>Dialog</b>（全圆角 28px）。
             </p>
@@ -195,15 +252,19 @@ const stats = [
 
         <div class="modal-feature-box">
           <div class="feature-item">
-            <div class="feature-icon"><Smartphone :size="24" /></div>
+            <div class="m3-geometric-badge" style="background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);">
+              <Smartphone :size="24" />
+            </div>
             <div class="feature-text">
               <div class="title-medium">手机端形态 (&lt; 600px)</div>
-              <div class="body-small text-secondary">底部抽屉，滑入手柄，贴合移动端手势操作规范</div>
+              <div class="body-small text-secondary">贴底抽屉，滑入手柄，贴合移动端原生单手手势操作</div>
             </div>
           </div>
           <div class="feature-divider"></div>
           <div class="feature-item">
-            <div class="feature-icon"><Laptop :size="24" /></div>
+            <div class="m3-geometric-badge" style="background-color: var(--md-sys-color-tertiary-container); color: var(--md-sys-color-on-tertiary-container);">
+              <Laptop :size="24" />
+            </div>
             <div class="feature-text">
               <div class="title-medium">桌面端形态 (&gt;= 600px)</div>
               <div class="body-small text-secondary">居中模态对话框，支持 ESC 键与点击遮罩极速关闭</div>
@@ -223,7 +284,7 @@ const stats = [
     <!-- 自适应弹窗实例 -->
     <AdaptiveModal
       v-model="isModalOpen"
-      title="自适应设计验证"
+      title="M3 Expressive 设计验证"
       description="您可以尝试调整浏览器窗口宽度（拉大或缩小至 600px 以下），观察弹窗形态与交互的无缝转变。"
     >
       <div class="modal-content-demo">
@@ -240,15 +301,15 @@ const stats = [
         <div class="demo-feature-checks">
           <div class="check-item">
             <CheckCircle2 :size="18" class="text-primary" />
-            <span class="body-medium">已连接 M3 全局系统颜色 Token</span>
+            <span class="body-medium">引入 Google Fonts (Plus Jakarta Sans + Noto Sans SC)</span>
           </div>
           <div class="check-item">
             <CheckCircle2 :size="18" class="text-primary" />
-            <span class="body-medium">支持深浅色无闪烁平滑换肤</span>
+            <span class="body-medium">已支持 Primary Tonal 与 Tertiary Tonal 高级色彩容器撞色</span>
           </div>
           <div class="check-item">
             <CheckCircle2 :size="18" class="text-primary" />
-            <span class="body-medium">Vue 3 Composition API + TypeScript 完整类型推断</span>
+            <span class="body-medium">卡片圆角全量进化至 24px，集成 48px 几何独立图标底座</span>
           </div>
         </div>
       </div>
@@ -269,131 +330,190 @@ const stats = [
 .playground-view {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 36px;
 }
 
-.welcome-section {
-  padding: 8px 0;
+/* 顶部 Hero 区域 */
+.hero-section {
+  padding: 8px 0 4px 0;
 }
 
-.welcome-chip {
+.hero-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
+  gap: 8px;
+  padding: 6px 14px;
   border-radius: var(--md-sys-shape-corner-full);
   background-color: var(--md-sys-color-secondary-container);
   color: var(--md-sys-color-on-secondary-container);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.hero-title {
+  color: var(--md-sys-color-on-surface);
   margin-bottom: 12px;
 }
 
-.welcome-title {
-  color: var(--md-sys-color-on-surface);
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.welcome-subtitle {
+.hero-subtitle {
   color: var(--md-sys-color-on-surface-variant);
+  max-width: 820px;
+  line-height: 1.6;
 }
 
-.stats-grid {
+.hero-subtitle code {
+  padding: 2px 6px;
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-primary);
+  font-family: monospace;
+}
+
+/* 模块公共 Header */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--md-sys-color-primary);
+  font-weight: 600;
+}
+
+/* 4 列 Expressive 卡片 */
+.expressive-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 20px;
 }
 
 @media (max-width: 1024px) {
-  .stats-grid {
+  .expressive-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 599.98px) {
-  .stats-grid {
+  .expressive-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.stat-card {
-  padding: 20px;
-  border-radius: var(--md-sys-shape-corner-large);
+.expressive-card {
+  min-height: 180px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.stat-card.surface-container-low {
-  background-color: var(--md-sys-color-surface-container-low);
-}
-
-.stat-card.surface-container {
-  background-color: var(--md-sys-color-surface-container);
-}
-
-.stat-card.surface {
-  background-color: var(--md-sys-color-surface);
-}
-
-.stat-card.surface-container-high {
-  background-color: var(--md-sys-color-surface-container-high);
-}
-
-.stat-card__header {
+.card-top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
-.stat-card__title {
-  color: var(--md-sys-color-on-surface-variant);
-}
-
-.stat-card__icon-badge {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--md-sys-shape-corner-full);
-  background-color: var(--md-sys-color-surface-container-highest);
-  color: var(--md-sys-color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stat-card__value {
-  color: var(--md-sys-color-on-surface);
-  font-weight: 600;
-  line-height: 1.1;
-  margin-bottom: 8px;
-}
-
-.stat-card__trend {
-  display: flex;
+.trend-badge {
+  display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: var(--md-sys-color-on-surface-variant);
+  padding: 4px 10px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.stat-card__trend.is-positive {
+[data-theme="dark"] .trend-badge {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.trend-badge.is-positive {
   color: #1b873f;
-}
-[data-theme="dark"] .stat-card__trend.is-positive {
-  color: #4ade80;
+  background-color: rgba(27, 135, 63, 0.12);
 }
 
+[data-theme="dark"] .trend-badge.is-positive {
+  color: #4ade80;
+  background-color: rgba(74, 222, 128, 0.15);
+}
+
+.card-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-title {
+  opacity: 0.85;
+}
+
+.card-value {
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 4px 0 2px 0;
+}
+
+.card-caption {
+  opacity: 0.75;
+}
+
+/* 五态卡片对比网格 */
+.variants-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .variants-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 599.98px) {
+  .variants-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.variant-preview-card {
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.opacity-80 {
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+/* 演示区卡片 */
 .demo-section {
   width: 100%;
 }
 
 .demo-card {
-  padding: 24px;
+  padding: 28px;
 }
 
 .section-title-wrap {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+}
+
+.section-title-wrap code {
+  padding: 2px 6px;
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-primary);
+  font-family: monospace;
 }
 
 .text-secondary {
@@ -404,17 +524,18 @@ const stats = [
   color: var(--md-sys-color-primary);
 }
 
+/* 按钮展示群组 */
 .buttons-preview-group {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 12px;
+  gap: 24px;
+  margin-top: 16px;
 }
 
 .button-row {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .button-row__title {
@@ -424,18 +545,19 @@ const stats = [
 .button-row__items {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
   align-items: center;
 }
 
+/* 弹窗特性展示盒 */
 .modal-feature-box {
   display: flex;
   align-items: center;
   background-color: var(--md-sys-color-surface-container-low);
-  border-radius: var(--md-sys-shape-corner-medium);
-  padding: 20px;
-  margin-top: 8px;
-  gap: 20px;
+  border-radius: var(--md-sys-shape-corner-large);
+  padding: 24px;
+  margin-top: 12px;
+  gap: 24px;
 }
 
 @media (max-width: 599.98px) {
@@ -452,32 +574,21 @@ const stats = [
 .feature-item {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex: 1;
-}
-
-.feature-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--md-sys-shape-corner-medium);
-  background-color: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 .feature-divider {
   width: 1px;
-  height: 40px;
+  height: 48px;
   background-color: var(--md-sys-color-outline-variant);
 }
 
+/* 弹窗内部样式 */
 .modal-content-demo {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
   margin-top: 8px;
 }
 
@@ -493,11 +604,11 @@ const stats = [
 
 .m3-text-field {
   height: 48px;
-  border-radius: var(--md-sys-shape-corner-small);
+  border-radius: var(--md-sys-shape-corner-medium);
   border: 1px solid var(--md-sys-color-outline);
   background-color: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface);
-  padding: 0 14px;
+  padding: 0 16px;
   font-size: 14px;
   outline: none;
   transition: border-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
@@ -511,16 +622,16 @@ const stats = [
 .demo-feature-checks {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 12px;
+  gap: 12px;
+  padding: 16px;
   background-color: var(--md-sys-color-surface-container);
-  border-radius: var(--md-sys-shape-corner-medium);
+  border-radius: var(--md-sys-shape-corner-large);
 }
 
 .check-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   color: var(--md-sys-color-on-surface);
 }
 </style>
