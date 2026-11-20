@@ -81,6 +81,7 @@
   - 支持 Vue 3 泛型类型安全、表头排序、多选行、骨架屏 Loading、空状态插槽以及单元格插槽定制。
   - **一体化分页契约**：分页器应当通过 `#pagination` 插槽无缝嵌套于 `MdTable` 卡片底部统一呈现，以 `1px solid var(--md-sys-color-outline-variant)` 分割，杜绝分页器独立悬浮导致的设计撕裂。
   - **操作列按钮收敛**：数据行操作列按钮超过 3 个时，必须将其余次要操作折叠进 `···` 更多操作菜单，严禁一行平铺过多按钮撑破单元格。
+  - **表格单元格单行省略铁律 (Cell Truncation Guard)**：在 `<MdTable>` 中渲染长文本字段（如描述、摘要、JSON 参数）时，单元格容器必须添加 `truncate max-w-[260px]`（单行省略），完整内容通过 `<MdTooltip>` 悬浮展示，严禁长文本折行撑高表格行高。
   - 外观严格遵循 M3 视觉契约：`surface-container-lowest` 背景、`outline-variant` 细边框与 `radius-card` 圆角，数据行高 48px，选中行使用 `secondary-container` 45% 透明度高亮。
 - **第二层（高复杂度重型数据交互场景）**：
   - 仅当业务明确需要复杂**列冻结（Pinning）**、**列宽实时拖拽（Resizing）**、**百万级虚拟滚动行（Virtualization）**或复杂树形分组时，才按需引入 `@tanstack/vue-table` 作为底层无头（Headless）状态逻辑引擎。

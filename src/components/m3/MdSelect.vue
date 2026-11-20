@@ -55,27 +55,17 @@ const updateDropdownPosition = () => {
   placement.value = isTop ? 'top' : 'bottom'
 
   if (props.teleport) {
-    const minW = props.size === 'sm' ? 90 : 140
-    const calculatedWidth = Math.max(rect.width, minW)
-
-    if (isTop) {
-      dropdownStyle.value = {
-        position: 'fixed',
-        bottom: `${window.innerHeight - rect.top + 4}px`,
-        left: `${rect.left}px`,
-        width: `${calculatedWidth}px`,
-        maxHeight: '220px',
-        zIndex: 'var(--z-popover, 60)'
-      }
-    } else {
-      dropdownStyle.value = {
-        position: 'fixed',
-        top: `${rect.bottom + 4}px`,
-        left: `${rect.left}px`,
-        width: `${calculatedWidth}px`,
-        maxHeight: '220px',
-        zIndex: 'var(--z-popover, 60)'
-      }
+    dropdownStyle.value = {
+      position: 'fixed',
+      left: `${rect.left}px`,
+      minWidth: `${rect.width}px`,
+      width: 'max-content',
+      maxWidth: '320px',
+      maxHeight: '220px',
+      zIndex: 'var(--z-popover, 60)',
+      ...(isTop
+        ? { bottom: `${window.innerHeight - rect.top + 4}px` }
+        : { top: `${rect.bottom + 4}px` })
     }
   }
 }
@@ -195,11 +185,11 @@ onUnmounted(() => {
               ]"
               @click="selectOption(opt)"
             >
-              <span class="option-label">{{ opt.label }}</span>
+              <span class="option-label" :title="opt.label">{{ opt.label }}</span>
               <Check
                 v-if="opt.value === modelValue"
-                :size="14"
-                class="option-check text-primary"
+                :size="16"
+                class="option-check"
               />
             </li>
           </ul>
@@ -215,6 +205,7 @@ onUnmounted(() => {
   display: inline-block;
   user-select: none;
   width: auto;
+  vertical-align: middle;
 }
 
 /* 尺寸变体: md (表单默认) */
@@ -294,17 +285,18 @@ onUnmounted(() => {
 .m3-select-dropdown {
   position: absolute;
   left: 0;
-  right: 0;
   min-width: 100%;
   width: max-content;
+  max-width: 320px;
   max-height: 220px;
   background-color: var(--md-sys-color-surface-container-high);
   border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-medium, 12px);
-  box-shadow: var(--md-sys-elevation-level2);
+  border-radius: 12px;
+  box-shadow: var(--md-elevation-2);
   overflow-y: auto;
   z-index: var(--z-popover, 60);
   padding: 4px;
+  box-sizing: border-box;
 }
 
 .placement-bottom {
@@ -330,10 +322,13 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 6px 10px;
+  height: 36px;
+  padding: 0 12px;
+  box-sizing: border-box;
   border-radius: var(--md-sys-shape-corner-small, 8px);
   color: var(--md-sys-color-on-surface);
-  font-size: var(--md-type-meta-size, 12px);
+  font-size: var(--md-type-body-size, 14px);
+  line-height: var(--md-type-body-lh, 22px);
   cursor: pointer;
   transition: background-color var(--md-sys-motion-duration-short2) var(--md-easing-emphasized);
 }
@@ -349,6 +344,10 @@ onUnmounted(() => {
   font-weight: 700;
 }
 
+.m3-select-option.is-selected .option-check {
+  color: var(--md-sys-color-on-secondary-container);
+}
+
 .m3-select-option.is-disabled {
   opacity: 0.38;
   cursor: not-allowed;
@@ -356,10 +355,17 @@ onUnmounted(() => {
 
 .option-label {
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+  text-align: left;
 }
 
 .option-check {
   flex-shrink: 0;
+  margin-left: 8px;
+  color: var(--md-sys-color-primary);
 }
 
 .text-primary {
