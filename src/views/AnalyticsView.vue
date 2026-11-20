@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { MdCard, MdButton } from '@/components/m3'
+import { MdCard, MdButton, MdChartCard, type MdTableColumn } from '@/components/m3'
 import {
   TrendingUp,
   Filter,
@@ -12,7 +12,7 @@ import {
   Layers
 } from 'lucide-vue-next'
 
-interface MetricPoint {
+interface MetricPoint extends Record<string, unknown> {
   day: string
   date: string
   fullDate: string
@@ -26,6 +26,22 @@ interface MetricPoint {
   status4xx: number
   status5xx: number
 }
+
+// 图表 1 & 2 数据表列契约
+const chart1Columns: MdTableColumn<MetricPoint>[] = [
+  { key: 'fullDate', title: '日期周期' },
+  { key: 'requestsDisplay', title: '请求吞吐量', numeric: true },
+  { key: 'successRate', title: '成功率 (%)', numeric: true },
+  { key: 'avgLatency', title: '平均时延 (ms)', numeric: true }
+]
+
+const chart2Columns: MdTableColumn<MetricPoint>[] = [
+  { key: 'fullDate', title: '日期周期' },
+  { key: 'status2xx', title: '2xx 正常响应', numeric: true },
+  { key: 'status3xx', title: '3xx 重定向', numeric: true },
+  { key: 'status4xx', title: '4xx 客户端错误', numeric: true },
+  { key: 'status5xx', title: '5xx 服务端故障', numeric: true }
+]
 
 // 7天时序指标数据源
 const raw7dData: MetricPoint[] = [
@@ -319,28 +335,29 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
       <!-- ====================================================================
            1. 左侧：API / 业务请求总览 (双 Y 轴组合 SVG 图表)
            ==================================================================== -->
-      <MdCard variant="elevated" class="chart-card">
-        <template #header>
-          <div class="card-title-bar">
-            <div class="card-title-group">
-              <span class="type-title-md">API / 业务请求总览</span>
-              <span class="type-meta text-secondary">吞吐量 & 成功率</span>
+      <MdChartCard
+        title="API / 业务请求总览"
+        subtitle="吞吐量 & 成功率"
+        :icon="Activity"
+        :data="raw7dData"
+        :columns="chart1Columns"
+        export-filename="api-throughput-metrics.csv"
+        class="chart-card"
+      >
+        <template #header-start>
+          <!-- 顶部轻量 KPI 摘要 -->
+          <div class="throughput-summary">
+            <div class="summary-item">
+              <span class="type-meta text-secondary">总吞吐量</span>
+              <span class="type-title-md tabular-nums font-bold">{{ periodSummary.total }}</span>
             </div>
-
-            <!-- 顶部轻量 KPI 摘要 -->
-            <div class="throughput-summary">
-              <div class="summary-item">
-                <span class="type-meta text-secondary">总吞吐量</span>
-                <span class="type-title-md tabular-nums font-bold">{{ periodSummary.total }}</span>
-              </div>
-              <div class="summary-item">
-                <span class="type-meta text-secondary">平均成功率</span>
-                <span class="type-title-md tabular-nums font-bold text-success">{{ periodSummary.success }}</span>
-              </div>
-              <div class="summary-pill type-meta whitespace-nowrap shrink-0">
-                <TrendingUp :size="14" />
-                <span class="tabular-nums">{{ periodSummary.trend }}</span>
-              </div>
+            <div class="summary-item">
+              <span class="type-meta text-secondary">平均成功率</span>
+              <span class="type-title-md tabular-nums font-bold text-success">{{ periodSummary.success }}</span>
+            </div>
+            <div class="summary-pill type-meta whitespace-nowrap shrink-0">
+              <TrendingUp :size="14" />
+              <span class="tabular-nums">{{ periodSummary.trend }}</span>
             </div>
           </div>
         </template>
@@ -548,37 +565,41 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
           </svg>
         </div>
 
-        <!-- 底部图例说明与信息摘要 -->
-        <div class="chart-legend-row">
-          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
-            <span class="legend-shape shape-square bg-primary"></span>
-            <span>请求吞吐量 (Throughput, 默认主色)</span>
+        <template #footer>
+          <!-- 底部图例说明与信息摘要 -->
+          <div class="chart-legend-row">
+            <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
+              <span class="legend-shape shape-square bg-primary"></span>
+              <span>请求吞吐量 (Throughput, 默认主色)</span>
+            </div>
+            <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
+              <span class="legend-shape shape-circle bg-success"></span>
+              <span>接口成功率 (Success Rate, 语义绿)</span>
+            </div>
+            <div class="legend-item type-meta text-secondary ml-auto whitespace-nowrap shrink-0">
+              <Zap :size="14" class="text-primary" />
+              <span>实时聚合 · 采样周期 1m</span>
+            </div>
           </div>
-          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
-            <span class="legend-shape shape-circle bg-success"></span>
-            <span>接口成功率 (Success Rate, 语义绿)</span>
-          </div>
-          <div class="legend-item type-meta text-secondary ml-auto whitespace-nowrap shrink-0">
-            <Zap :size="14" class="text-primary" />
-            <span>实时聚合 · 采样周期 1m</span>
-          </div>
-        </div>
-      </MdCard>
+        </template>
+      </MdChartCard>
 
       <!-- ====================================================================
            2. 右侧：异常与状态分布 (多系列堆叠 SVG 柱状图)
            ==================================================================== -->
-      <MdCard variant="elevated" class="chart-card">
-        <template #header>
-          <div class="card-title-bar">
-            <div class="card-title-group">
-              <span class="type-title-md">异常与状态分布</span>
-              <span class="type-meta text-secondary whitespace-nowrap">HTTP Code 堆叠</span>
-            </div>
-            <div class="summary-pill success type-meta font-bold whitespace-nowrap shrink-0">
-              <CheckCircle2 :size="14" />
-              <span class="tabular-nums">可用性 99.89%</span>
-            </div>
+      <MdChartCard
+        title="异常与状态分布"
+        subtitle="HTTP Code 堆叠"
+        :icon="Layers"
+        :data="raw7dData"
+        :columns="chart2Columns"
+        export-filename="http-status-distribution.csv"
+        class="chart-card"
+      >
+        <template #actions>
+          <div class="summary-pill success type-meta font-bold whitespace-nowrap shrink-0">
+            <CheckCircle2 :size="14" />
+            <span class="tabular-nums">可用性 99.89%</span>
           </div>
         </template>
 
@@ -766,26 +787,28 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
           </svg>
         </div>
 
-        <!-- 底部形状编码四态图例 -->
-        <div class="chart-legend-row">
-          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
-            <span class="legend-shape shape-circle bg-success"></span>
-            <span>2xx 成功</span>
+        <template #footer>
+          <!-- 底部形状编码四态图例 -->
+          <div class="chart-legend-row">
+            <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
+              <span class="legend-shape shape-circle bg-success"></span>
+              <span>2xx 成功</span>
+            </div>
+            <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
+              <span class="legend-shape shape-square bg-secondary"></span>
+              <span>3xx 缓存</span>
+            </div>
+            <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
+              <span class="legend-shape shape-diamond bg-warning"></span>
+              <span>4xx 客户端</span>
+            </div>
+            <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
+              <span class="legend-shape shape-triangle bg-error"></span>
+              <span>5xx 服务端</span>
+            </div>
           </div>
-          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
-            <span class="legend-shape shape-square bg-secondary"></span>
-            <span>3xx 缓存</span>
-          </div>
-          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
-            <span class="legend-shape shape-diamond bg-warning"></span>
-            <span>4xx 客户端</span>
-          </div>
-          <div class="legend-item type-meta text-secondary whitespace-nowrap shrink-0">
-            <span class="legend-shape shape-triangle bg-error"></span>
-            <span>5xx 服务端</span>
-          </div>
-        </div>
-      </MdCard>
+        </template>
+      </MdChartCard>
     </div>
 
     <!-- 底部辅助监控行：各端自适应占比与安全风控 -->

@@ -9,6 +9,7 @@ export { default as MdSelect } from './MdSelect.vue'
 export { default as MdDrawer } from './MdDrawer.vue'
 export { default as MdTooltip } from './MdTooltip.vue'
 export { default as MdSnackbar } from './MdSnackbar.vue'
+export { default as MdChartCard } from './MdChartCard.vue'
 
 export { useToast } from '../../composables/useToast'
 

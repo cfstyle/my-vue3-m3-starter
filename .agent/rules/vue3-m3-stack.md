@@ -44,5 +44,6 @@ trigger: always_on
   - `MdDrawer`: 移动端底部抽屉、桌面端右侧滑出抽屉，内置固定头尾与滚动穿透防护。
   - `MdTooltip` & `MdSnackbar`: 纯文本微胶囊与富文本 SLA 帮助气泡，以及全局 Toast 通知套件。
   - `MdTable` & `MdPagination`: 零第三方依赖、Vue 3 全泛型约束的轻量表格与分页套件，支持多选、排序、骨架屏与插槽定制。
+  - `MdChartCard`: 标准 M3 图表容器，内置双态分段原位切换（可视化图表 / 底层明细表）与零依赖 UTF-8 BOM CSV 导出套件。
 - **单行水平内联筛选栏原则**：表格上方的筛选工具栏必须使用单行水平内联布局（所有控件高度统一为 `36px`），严禁使用两行垂直堆叠结构或外包深灰大卡片。
 - **禁止私自引入重型 UI 库**（如 Element Plus、Ant Design Vue 等），保持项目的纯粹与轻量性。常规列表使用 `MdTable`，超复杂交互仅允许套用 `@tanstack/vue-table` 无头逻辑。
