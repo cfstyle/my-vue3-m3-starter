@@ -25,6 +25,7 @@ trigger: always_on
 
 ## 3. 设计规范与色彩约束（严禁硬编码颜色）
 - **禁止硬编码颜色**：严禁在 CSS/style 中直接使用 `#fff`, `#333`, `rgb(...)` 等硬编码颜色代码。
+- **严禁使用 Tailwind 冷蓝灰（No Tailwind Slate/Gray）**：严禁在组件或页面中直接使用 Tailwind 的 `bg-slate-*`、`text-slate-*`、`border-slate-*` 或 `bg-gray-*`（这些默认色阶带有冷蓝底色，会破坏 Studio 极简主题与 HCT 动态主题的纯正色彩），所有背景与边框必须通过 `var(--md-sys-color-surface-container-*)` 与 `var(--md-sys-color-outline-variant)` 引用。
 - **严格遵循 M3 Tokens**：所有颜色属性必须使用 `src/styles/m3-tokens.css` 中声明的标准语义化 CSS 变量：
   - 背景与容器：`var(--md-sys-color-surface)`, `var(--md-sys-color-surface-container-low)`, `var(--md-sys-color-surface-container)`, `var(--md-sys-color-surface-container-high)`, `var(--md-sys-color-surface-container-highest)`。
   - 前景与文字：`var(--md-sys-color-on-surface)`, `var(--md-sys-color-on-surface-variant)`。
@@ -37,7 +38,11 @@ trigger: always_on
 - 基础组件一律优先复用 `src/components/m3/` 目录下的原子组件：
   - `MdButton`: 支持 filled / tonal / outlined / text，全圆角 9999px，含 M3 Expressive 微动效。
   - `MdCard`: 支持 elevated / filled / outlined / primary-tonal / tertiary-tonal 五种形态，默认 24px 圆角。
+  - `MdInput` & `MdSelect`: 原生输入与选择原语，支持 `sm`（36px 单行紧凑筛选专用）与 `md`（40px 表单专用）尺寸，支持 `clearable`、前置插槽与防裁剪 Teleport，与 `MdButton` 实现 100% 像素级等高对齐。
   - `MdSwitch`: 标准 52×32px 轨道，未选 16px 滑块，选中 24px 放大并支持勾选图标。
   - `AdaptiveModal`: 移动端底部滑出 Bottom Sheet，PC 端居中 Dialog 自动适配弹窗。
+  - `MdDrawer`: 移动端底部抽屉、桌面端右侧滑出抽屉，内置固定头尾与滚动穿透防护。
+  - `MdTooltip` & `MdSnackbar`: 纯文本微胶囊与富文本 SLA 帮助气泡，以及全局 Toast 通知套件。
   - `MdTable` & `MdPagination`: 零第三方依赖、Vue 3 全泛型约束的轻量表格与分页套件，支持多选、排序、骨架屏与插槽定制。
+- **单行水平内联筛选栏原则**：表格上方的筛选工具栏必须使用单行水平内联布局（所有控件高度统一为 `36px`），严禁使用两行垂直堆叠结构或外包深灰大卡片。
 - **禁止私自引入重型 UI 库**（如 Element Plus、Ant Design Vue 等），保持项目的纯粹与轻量性。常规列表使用 `MdTable`，超复杂交互仅允许套用 `@tanstack/vue-table` 无头逻辑。

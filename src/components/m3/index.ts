@@ -1,5 +1,6 @@
 export { default as MdButton } from './MdButton.vue'
 export { default as MdCard } from './MdCard.vue'
+export { default as MdInput } from './MdInput.vue'
 export { default as MdSwitch } from './MdSwitch.vue'
 export { default as AdaptiveModal } from './AdaptiveModal.vue'
 export { default as MdTable } from './MdTable.vue'

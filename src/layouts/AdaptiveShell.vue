@@ -46,6 +46,7 @@ const searchQuery = ref('')
 const searchInputRef = ref<HTMLInputElement | null>(null)
 const isRailCollapsed = ref(false)
 const isMobileDrawerOpen = ref(false)
+const isMac = ref(false)
 
 const toggleCollapse = () => {
   isRailCollapsed.value = !isRailCollapsed.value
@@ -83,6 +84,9 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
 onMounted(() => {
   themeStore.setLayoutContext('admin')
   window.addEventListener('keydown', handleGlobalKeydown)
+  if (typeof navigator !== 'undefined') {
+    isMac.value = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform || navigator.userAgent)
+  }
 })
 
 onUnmounted(() => {
@@ -322,11 +326,16 @@ onUnmounted(() => {
             ref="searchInputRef"
             v-model="searchQuery"
             type="text"
-            placeholder="搜索功能、数据或设置... (Ctrl+K)"
+            placeholder="搜索功能、数据或设置..."
             class="m3-search-bar__input body-medium"
           />
           <div class="m3-search-bar__shortcut label-small">
-            <Command :size="12" /> K
+            <template v-if="isMac">
+              <Command :size="12" /> K
+            </template>
+            <template v-else>
+              <span>Ctrl K</span>
+            </template>
           </div>
         </div>
 

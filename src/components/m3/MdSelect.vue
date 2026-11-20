@@ -223,22 +223,22 @@ onUnmounted(() => {
 }
 
 .m3-select--md .m3-select-trigger {
-  height: 40px;
+  height: var(--md-control-height-md, 40px);
   padding: 0 14px;
   border-radius: var(--md-sys-shape-corner-medium, 12px);
   font-size: var(--md-type-body-size, 14px);
   line-height: var(--md-type-body-lh, 22px);
 }
 
-/* 尺寸变体: sm (表格/分页微调) */
+/* 尺寸变体: sm (表格/单行筛选栏专用) */
 .m3-select--sm {
   min-width: 90px;
 }
 
 .m3-select--sm .m3-select-trigger {
-  height: 32px;
+  height: var(--md-control-height-sm, 36px);
   padding: 0 10px;
-  border-radius: var(--md-sys-shape-corner-full, 9999px);
+  border-radius: var(--md-sys-shape-corner-small, 8px);
   font-size: var(--md-type-meta-size, 12px);
   line-height: var(--md-type-meta-lh, 18px);
 }

@@ -44,5 +44,6 @@
 ---
 
 ## 6. 交付自检闭环 (Verification Loop)
+- **举一反三全局连带修复 (Global Pattern Sweep)**：当发现任何一处代码违背规范、组件替换不彻底（如遗留原生 `<select>` / `<input>`）或存在样式/交互缺陷时，严禁单点局部打补丁；必须使用全局检索扫描全库 `src/`，一次性连带同步根治所有同类缺陷。
 - **静态拦截门禁**：每次新增组件、页面或修改业务逻辑后，必须执行 `npm run check`（包含 `vue-tsc --noEmit` 全量类型检查与 ESLint 代码质量扫描）。
 - **零报错交付**：交付前必须确保 `npm run check` 退出码为 0，零 TypeScript 类型报错，零 ESLint 规约报错。

@@ -14,4 +14,7 @@ description: 将存量旧项目迁移或渐进重构至 Material 3 视觉与零�
 3. **分阶段渐进迁移（每完成一阶段运行一次 `npm run check`）**：
    - **Stage 1（接口与类型清洗）**：迁移旧项目接口层，补全严格 TypeScript 类型定义，消除 `any`，增加异常捕获与防竞态逻辑。
    - **Stage 2（外壳与路由接管）**：将旧路由接入 `AdaptiveShell.vue` 或 `PortalShell.vue`，对齐导航菜单。
-   - **Stage 3（视图 M3 化重构）**：按优先级逐页替换硬编码颜色、厚重阴影卡片与原生弹窗为 `MdCard`、`MdButton`、`AdaptiveModal` 与响应式栅格。
+   - **Stage 3（视图 M3 化重构与表单原语清洗）**：
+     - 按优先级逐页替换硬编码颜色、厚重阴影卡片与原生弹窗为 `MdCard`、`MdButton`、`AdaptiveModal` 与响应式栅格。
+     - **表单与控件原语强制替换清单**：全局检索并强制替换所有原生 `<select>` 为 `MdSelect`、原生 `<input>` 为 `MdInput`，不得遗留任何未样式化的浏览器系统默认表单控件。
+     - **筛选栏单行内联改造**：数据表格上方若存在“Label 在上 + 控件在下”的两行堆叠结构或外部包裹的厚重深灰卡片，必须彻底重构为**单行水平内联布局**（各控件高度严格统一锁定为 `var(--md-control-height-sm, 36px)`，筛选标签直接内嵌进 `MdSelect` 选项或作为 `MdInput` 的 `#prefix` 图标/占位符，严禁上下两行堆叠浪费垂直视野）。

@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import {
   MdButton,
   MdCard,
+  MdInput,
   MdSwitch,
   AdaptiveModal,
   MdTable,
@@ -690,15 +691,17 @@ const handleConfirmBatchRestart = () => {
         <!-- 工具栏 -->
         <template #toolbar>
           <div class="table-toolbar-left">
-            <div class="table-search-box">
-              <Search :size="16" class="search-icon text-secondary" />
-              <input
-                v-model="tableSearch"
-                type="text"
-                placeholder="搜索节点标识、集群或地域..."
-                class="table-search-input type-meta"
-              />
-            </div>
+            <MdInput
+              v-model="tableSearch"
+              size="sm"
+              placeholder="搜索节点标识、集群或地域..."
+              clearable
+              class="table-search-input-field"
+            >
+              <template #prefix>
+                <Search :size="14" class="text-secondary" />
+              </template>
+            </MdInput>
 
             <!-- 状态快速过滤微胶囊 -->
             <div class="status-filter-capsules">
@@ -833,11 +836,11 @@ const handleConfirmBatchRestart = () => {
       <div class="modal-content-demo">
         <div class="demo-form-field">
           <label class="form-label type-body font-medium">配置项名称</label>
-          <input
+          <MdInput
             v-model="demoInput"
-            type="text"
+            size="md"
             placeholder="请输入测试参数或标签..."
-            class="m3-text-field type-body"
+            clearable
           />
         </div>
 
@@ -1446,24 +1449,9 @@ const handleConfirmBatchRestart = () => {
   gap: 12px;
 }
 
-.table-search-box {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 12px;
-  height: 38px;
-  border-radius: var(--md-sys-shape-corner-full, 9999px);
-  background-color: var(--md-sys-color-surface-container);
-  border: 1px solid var(--md-sys-color-outline-variant);
+.table-search-input-field {
   min-width: 260px;
-}
-
-.table-search-input {
-  border: none;
-  background: transparent;
-  outline: none;
-  color: var(--md-sys-color-on-surface);
-  width: 100%;
+  max-width: 340px;
 }
 
 .status-filter-capsules {

@@ -1113,6 +1113,11 @@ const c2YTicks = ['1.0M', '750K', '500K', '250K', '0']
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
+[data-theme="dark"] .svg-bar-rect.is-peak,
+[data-theme="dark"] .svg-bar-rect.is-active {
+  fill: color-mix(in srgb, var(--md-sys-color-primary) 78%, transparent);
+}
+
 .svg-line-point {
   transition: r 0.15s ease;
 }
