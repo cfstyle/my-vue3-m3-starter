@@ -154,8 +154,7 @@ export const useThemeStore = defineStore('theme', () => {
       )
 
       if (activePreset?.monochrome) {
-        // 使用 TonalPalette.fromHueAndChroma(0, 0) 生成纯粹的零彩度中性灰阶
-        const mono = TonalPalette.fromHueAndChroma(0, 0)
+        // 使用纯粹的零彩度中性灰阶固化映射 (覆盖全部表面与反色容器)
         const monoTokens: Record<string, string> = dark
           ? {
               // 深色模式 (Dark Mode)
@@ -193,8 +192,8 @@ export const useThemeStore = defineStore('theme', () => {
               '--md-sys-color-on-surface-variant': '#C4C7C5',
               '--md-sys-color-outline': '#8E918F',
               '--md-sys-color-outline-variant': '#3C4043',
-              '--md-sys-color-inverse-surface': hexFromArgb(mono.tone(90)),
-              '--md-sys-color-inverse-on-surface': hexFromArgb(mono.tone(20))
+              '--md-sys-color-inverse-surface': '#E3E3E3',
+              '--md-sys-color-inverse-on-surface': '#1F1F1F'
             }
           : {
               // 浅色模式 (Light Mode)
@@ -232,8 +231,8 @@ export const useThemeStore = defineStore('theme', () => {
               '--md-sys-color-on-surface-variant': '#444746',
               '--md-sys-color-outline': '#747775',
               '--md-sys-color-outline-variant': '#E0E3E7',
-              '--md-sys-color-inverse-surface': hexFromArgb(mono.tone(20)),
-              '--md-sys-color-inverse-on-surface': hexFromArgb(mono.tone(95))
+              '--md-sys-color-inverse-surface': '#28292A',
+              '--md-sys-color-inverse-on-surface': '#F2F2F2'
             }
 
         for (const [varName, varVal] of Object.entries(monoTokens)) {

@@ -64,7 +64,7 @@ const getIcon = (type: ToastType) => {
 <style scoped>
 .m3-snackbar-container {
   position: fixed;
-  top: 24px;
+  bottom: 24px;
   right: 24px;
   z-index: var(--z-toast, 70);
   display: flex;
@@ -159,12 +159,12 @@ const getIcon = (type: ToastType) => {
 
 .m3-toast-leave-to {
   opacity: 0;
-  transform: translateY(-16px) scale(0.92);
+  transform: translateY(16px) scale(0.92);
 }
 
 @media (max-width: 599.98px) {
   .m3-snackbar-container {
-    top: 16px;
+    bottom: 96px;
     right: 16px;
     left: 16px;
     width: auto;

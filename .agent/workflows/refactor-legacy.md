@@ -12,7 +12,9 @@ description: 将存量旧项目迁移或渐进重构至 Material 3 视觉与零�
    - 若旧项目包含 `element-plus` 或 `ant-design-vue`，创建 `src/styles/legacy-bridge.css` 并在 `main.ts` 引入，将其主题变量（如 `--el-color-primary`、`--el-bg-color`、`--el-border-radius-base`）映射到本模板的 `--md-sys-color-*` 与 `--md-radius-*`，保证旧组件与 M3 壳层同色、同圆角且兼容暗黑模式。
 
 3. **分阶段渐进迁移（每完成一阶段运行一次 `npm run check`）**：
-   - **Stage 1（接口与类型清洗）**：迁移旧项目接口层，补全严格 TypeScript 类型定义，消除 `any`，增加异常捕获与防竞态逻辑。
+   - **Stage 1（接口与类型清洗）**：
+     - 迁移旧项目接口层，补全严格 TypeScript 类型定义，消除 `any`，增加异常捕获与防竞态逻辑。
+     - **旧通知反馈系统清洗与统一**：迁移旧项目 API 层与错误拦截器时，必须删除原有的 `ElMessage`、`message.error`、`Antd message` 或自定义顶部悬浮提示条，统一替换为模板内置的 `useToast()` 命令式调用，由挂载在根节点的 `<MdSnackbar />` 统一呈现，严禁新旧两套提示系统并存。
    - **Stage 2（外壳与路由接管）**：将旧路由接入 `AdaptiveShell.vue` 或 `PortalShell.vue`，对齐导航菜单。
    - **Stage 3（视图 M3 化重构与表单原语清洗）**：
      - 按优先级逐页替换硬编码颜色、厚重阴影卡片与原生弹窗为 `MdCard`、`MdButton`、`AdaptiveModal` 与响应式栅格。
